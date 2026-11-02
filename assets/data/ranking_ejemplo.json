@@ -1,0 +1,103 @@
+{
+  "top": [
+    {
+      "posicion": 1,
+      "id": 1,
+      "nick": "Aria",
+      "clase": "mago",
+      "puntos": 340,
+      "victorias": 21,
+      "derrotas": 3
+    },
+    {
+      "posicion": 2,
+      "id": 2,
+      "nick": "Brakka",
+      "clase": "orco",
+      "puntos": 310,
+      "victorias": 19,
+      "derrotas": 5
+    },
+    {
+      "posicion": 3,
+      "id": 3,
+      "nick": "Sir_Galvan",
+      "clase": "caballero",
+      "puntos": 285,
+      "victorias": 18,
+      "derrotas": 6
+    },
+    {
+      "posicion": 4,
+      "id": 4,
+      "nick": "Zephyr",
+      "clase": "mago",
+      "puntos": 260,
+      "victorias": 16,
+      "derrotas": 7
+    },
+    {
+      "posicion": 5,
+      "id": 5,
+      "nick": "Gorrok",
+      "clase": "orco",
+      "puntos": 240,
+      "victorias": 15,
+      "derrotas": 8
+    },
+    {
+      "posicion": 6,
+      "id": 6,
+      "nick": "Elowen",
+      "clase": "mago",
+      "puntos": 215,
+      "victorias": 14,
+      "derrotas": 6
+    },
+    {
+      "posicion": 7,
+      "id": 7,
+      "nick": "Dante_DAM",
+      "clase": "caballero",
+      "puntos": 190,
+      "victorias": 12,
+      "derrotas": 7
+    },
+    {
+      "posicion": 8,
+      "id": 8,
+      "nick": "Kira",
+      "clase": "caballero",
+      "puntos": 170,
+      "victorias": 11,
+      "derrotas": 9
+    },
+    {
+      "posicion": 9,
+      "id": 9,
+      "nick": "Rurik",
+      "clase": "orco",
+      "puntos": 150,
+      "victorias": 10,
+      "derrotas": 10
+    },
+    {
+      "posicion": 10,
+      "id": 10,
+      "nick": "Mistica",
+      "clase": "mago",
+      "puntos": 140,
+      "victorias": 9,
+      "derrotas": 8
+    }
+  ],
+  "tu": {
+    "posicion": 14,
+    "id": 42,
+    "nick": "PlayerOne",
+    "clase": "caballero",
+    "puntos": 95,
+    "victorias": 6,
+    "derrotas": 8
+  }
+}

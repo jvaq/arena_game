@@ -1,0 +1,15 @@
+# Copia estas líneas en el pubspec.yaml de tu proyecto (respeta la sangría).
+
+dependencies:
+  flutter:
+    sdk: flutter
+  google_fonts: ^6.2.1      # fuentes Cinzel y Nunito
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/characters/
+    - assets/images/avatars/
+    - assets/images/weapons/
+    - assets/images/ui/
+    - assets/data/

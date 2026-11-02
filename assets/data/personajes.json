@@ -1,0 +1,184 @@
+{
+  "version": 1,
+  "maxPuntosBarra": 12,
+  "armasPorPersonaje": 2,
+  "clases": [
+    {
+      "id": "caballero",
+      "nombre": "Caballero",
+      "lema": "Armadura firme y honor intacto.",
+      "color": "#4C8FD6",
+      "imagen": "assets/images/characters/caballero.png",
+      "avatar": "assets/images/avatars/caballero.png",
+      "base": {
+        "vida": 7,
+        "ataque": 5,
+        "velocidad": 4
+      },
+      "armas": [
+        {
+          "id": "espada",
+          "nombre": "Espada larga",
+          "imagen": "assets/images/weapons/caballero_espada.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 2,
+            "velocidad": 0
+          },
+          "descripcion": "Equilibrada y fiable."
+        },
+        {
+          "id": "hacha",
+          "nombre": "Hacha de guerra",
+          "imagen": "assets/images/weapons/caballero_hacha.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 3,
+            "velocidad": -1
+          },
+          "descripcion": "Golpea fuerte, pero pesa."
+        },
+        {
+          "id": "lanza",
+          "nombre": "Lanza",
+          "imagen": "assets/images/weapons/caballero_lanza.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 2,
+            "velocidad": 1
+          },
+          "descripcion": "Alcance y rapidez."
+        },
+        {
+          "id": "maza",
+          "nombre": "Maza de pinchos",
+          "imagen": "assets/images/weapons/caballero_maza.png",
+          "bonus": {
+            "vida": 1,
+            "ataque": 2,
+            "velocidad": -1
+          },
+          "descripcion": "Aguanta y aplasta."
+        }
+      ]
+    },
+    {
+      "id": "orco",
+      "nombre": "Orco",
+      "lema": "Más músculo que paciencia.",
+      "color": "#6BBF59",
+      "imagen": "assets/images/characters/orco.png",
+      "avatar": "assets/images/avatars/orco.png",
+      "base": {
+        "vida": 8,
+        "ataque": 7,
+        "velocidad": 2
+      },
+      "armas": [
+        {
+          "id": "hacha_doble",
+          "nombre": "Hacha doble",
+          "imagen": "assets/images/weapons/orco_hacha_doble.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 4,
+            "velocidad": -2
+          },
+          "descripcion": "Dos filos, cero delicadeza."
+        },
+        {
+          "id": "martillo",
+          "nombre": "Martillo de guerra",
+          "imagen": "assets/images/weapons/orco_martillo.png",
+          "bonus": {
+            "vida": 1,
+            "ataque": 3,
+            "velocidad": -2
+          },
+          "descripcion": "Rompe escudos y huesos."
+        },
+        {
+          "id": "garrote",
+          "nombre": "Garrote de pinchos",
+          "imagen": "assets/images/weapons/orco_garrote.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 2,
+            "velocidad": 0
+          },
+          "descripcion": "Sencillo y brutal."
+        },
+        {
+          "id": "cuchilla",
+          "nombre": "Cuchilla de carnicero",
+          "imagen": "assets/images/weapons/orco_cuchilla.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 2,
+            "velocidad": 1
+          },
+          "descripcion": "Rápida para un orco."
+        }
+      ]
+    },
+    {
+      "id": "mago",
+      "nombre": "Mago",
+      "lema": "Un hechizo vale más que mil espadas.",
+      "color": "#8E5CF7",
+      "imagen": "assets/images/characters/mago.png",
+      "avatar": "assets/images/avatars/mago.png",
+      "base": {
+        "vida": 4,
+        "ataque": 8,
+        "velocidad": 5
+      },
+      "armas": [
+        {
+          "id": "baston_fuego",
+          "nombre": "Bastón de fuego",
+          "imagen": "assets/images/weapons/mago_baston_fuego.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 3,
+            "velocidad": -1
+          },
+          "descripcion": "Quema todo lo que mira."
+        },
+        {
+          "id": "varita_hielo",
+          "nombre": "Varita de hielo",
+          "imagen": "assets/images/weapons/mago_varita_hielo.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 1,
+            "velocidad": 2
+          },
+          "descripcion": "Ligera y escurridiza."
+        },
+        {
+          "id": "libro",
+          "nombre": "Libro arcano",
+          "imagen": "assets/images/weapons/mago_libro.png",
+          "bonus": {
+            "vida": 1,
+            "ataque": 2,
+            "velocidad": 0
+          },
+          "descripcion": "Conocimiento prohibido."
+        },
+        {
+          "id": "baston_rayo",
+          "nombre": "Bastón del rayo",
+          "imagen": "assets/images/weapons/mago_baston_rayo.png",
+          "bonus": {
+            "vida": 0,
+            "ataque": 2,
+            "velocidad": 1
+          },
+          "descripcion": "Descarga instantánea."
+        }
+      ]
+    }
+  ]
+}
