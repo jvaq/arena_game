@@ -1,4 +1,3 @@
-import 'package:arena_game/screens/menu_pruebas.dart';
 import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Arena',
       debugShowCheckedModeBanner: false,
       theme: ArenaTheme.oscuro(),
-      home: const MenuPruebas(),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
