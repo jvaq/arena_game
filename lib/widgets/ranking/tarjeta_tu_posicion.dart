@@ -1,3 +1,4 @@
+import 'package:arena_game/widgets/ranking/fila_ranking.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
@@ -20,6 +21,6 @@ class TarjetaTuPosicion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo B): sustituye este placeholder por la tarjeta real.
-    return PiezaPendiente('TarjetaTuPosicion · ${entrada.nick}', alto: 64);
+    return FilaRanking(entrada: this.entrada,resaltada:  true,);
   }
 }
