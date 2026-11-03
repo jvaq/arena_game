@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
+import '../../models/stats.dart';
 import '../../theme/arena_assets.dart';
 import '../../theme/arena_theme.dart';
-import '../../models/stats.dart';
 
 /// PIEZA G · Tres barras de stats (vida, ataque, velocidad).
 ///
@@ -30,58 +29,127 @@ class BarrasStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(grupo G)
-
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:<Widget>[
-          Image.asset(ArenaAssets.iconoVida),
-          Text('Vida'),
-          Expanded(
-            child: LinearProgressIndicator(
-            value: (stats.vida / maxPuntosBarra).clamp(0.0, 1.0),
-            color: ArenaColors.positivo,
-            backgroundColor: ArenaColors.superficieAlta,
-          ),
-          ),
-          Text('${stats.vida}'),
-        ],
-      ),
-      Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+
+        Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children:<Widget>[
-          Image.asset(ArenaAssets.iconoAtaque),
-      Text('Ataque'),
-      Expanded(
-        child: LinearProgressIndicator(
-          value: (stats.ataque / maxPuntosBarra).clamp(0.0, 1.0),
-          color: ArenaColors.negativo,
-          backgroundColor: ArenaColors.superficieAlta,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              ArenaAssets.iconoVida,
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 80,
+              child: Text(
+                'Vida',
+                style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: (stats.vida / maxPuntosBarra).clamp(0.0, 1.0),
+                    minHeight: 12,
+                    color: ArenaColors.positivo,
+                    backgroundColor: ArenaColors.superficieAlta,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              '${stats.vida}',
+              style: ArenaTextos.puntos.copyWith(color: ArenaColors.texto),
+            ),
+          ],
         ),
-      ),
-        Text('${stats.ataque}'),
-        ],
-      ),Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children:<Widget>[
-        Image.asset(ArenaAssets.iconoVelocidad),
-      Text('Velocidad'),
-      Expanded(
-        child: LinearProgressIndicator(
-          value: (stats.velocidad / maxPuntosBarra).clamp(0.0, 1.0),
-          color: ArenaColors.dorado,
-          backgroundColor: ArenaColors.superficieAlta,
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              ArenaAssets.iconoAtaque,
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 80,
+              child: Text(
+                'Ataque',
+                style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: (stats.ataque / maxPuntosBarra).clamp(0.0, 1.0),
+                    minHeight: 12,
+                    color: ArenaColors.negativo,
+                    backgroundColor: ArenaColors.superficieAlta,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              '${stats.ataque}',
+              style: ArenaTextos.puntos.copyWith(color: ArenaColors.texto),
+            ),
+          ],
         ),
-      ),
-        Text('${stats.velocidad}'),
-        ],
-      ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              ArenaAssets.iconoVelocidad,
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 80,
+              child: Text(
+                'Velocidad',
+                style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: (stats.velocidad / maxPuntosBarra).clamp(0.0, 1.0),
+                    minHeight: 12,
+                    color: ArenaColors.dorado,
+                    backgroundColor: ArenaColors.superficieAlta,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              '${stats.velocidad}',
+              style: ArenaTextos.puntos.copyWith(color: ArenaColors.texto),
+            ),
+          ],
+        ),
       ],
     );
   }
