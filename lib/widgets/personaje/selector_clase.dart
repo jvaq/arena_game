@@ -1,3 +1,5 @@
+import 'package:arena_game/theme/arena_assets.dart';
+import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
@@ -24,7 +26,58 @@ class SelectorClase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(grupo F)
-    return PiezaPendiente('SelectorClase · elegida: ${elegida.nombre}', alto: 96);
+    return Row(
+      children: [
+        Row(
+          children: [
+           Padding(
+             padding: EdgeInsets.all(ArenaMedidas.s8),
+             child: SelectorPersonaje(tipo: "Caballero"),
+           ),
+            Padding(
+              padding: EdgeInsets.all(ArenaMedidas.s8),
+              child: SelectorPersonaje(tipo: "Orco"),
+            ),
+            Padding(
+              padding: EdgeInsets.all(ArenaMedidas.s8),
+              child: SelectorPersonaje(tipo: "Mago"),
+            )
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class SelectorPersonaje extends StatelessWidget {
+  SelectorPersonaje({super.key, required this.tipo});
+
+  String tipo;
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+          color: ArenaColors.fondo,
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioBoton)
+      ),
+      child: Row(
+        children: [
+          AvatarCirculo(tipo: tipo),
+          Text(tipo)
+        ],
+      ),
+    ) ;
+  }
+}
+
+
+class AvatarCirculo extends StatelessWidget {
+  AvatarCirculo({super.key, required this.tipo});
+
+  String tipo;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(ArenaAssets.avatar(tipo));
   }
 }
