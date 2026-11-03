@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
 import '../pieza_pendiente.dart';
+import '../../theme/arena_assets.dart';
+import '../../theme/arena_theme.dart';
+import '../../models/stats.dart';
 
 /// PIEZA G · Tres barras de stats (vida, ataque, velocidad).
 ///
@@ -28,21 +31,22 @@ class BarrasStats extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo G)
-    return PiezaPendiente('BarrasStats · ${stats}', alto: 120);
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: Row(
+      children: [Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children:<Widget>[
-          Icon(ArenaAssets.iconoVida),
+          Image.asset(ArenaAssets.iconoVida),
           Text('Vida'),
           Expanded(
             child: LinearProgressIndicator(
             value: (stats.vida / maxPuntosBarra).clamp(0.0, 1.0),
             color: ArenaColors.positivo,
             backgroundColor: ArenaColors.superficieAlta,
+          ),
           ),
           Text('${stats.vida}'),
         ],
@@ -51,7 +55,7 @@ class BarrasStats extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children:<Widget>[
-          Icon(ArenaAssets.iconoAtaque),
+          Image.asset(ArenaAssets.iconoAtaque),
       Text('Ataque'),
       Expanded(
         child: LinearProgressIndicator(
@@ -59,13 +63,14 @@ class BarrasStats extends StatelessWidget {
           color: ArenaColors.negativo,
           backgroundColor: ArenaColors.superficieAlta,
         ),
+      ),
         Text('${stats.ataque}'),
         ],
       ),Row(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.start,
         children:<Widget>[
-        Icon(ArenaAssets.iconoVelocidad),
+        Image.asset(ArenaAssets.iconoVelocidad),
       Text('Velocidad'),
       Expanded(
         child: LinearProgressIndicator(
@@ -73,9 +78,11 @@ class BarrasStats extends StatelessWidget {
           color: ArenaColors.dorado,
           backgroundColor: ArenaColors.superficieAlta,
         ),
+      ),
         Text('${stats.velocidad}'),
         ],
       ),
+      ],
     );
   }
 }
