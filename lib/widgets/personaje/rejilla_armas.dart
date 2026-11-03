@@ -29,21 +29,19 @@ class RejillaArmas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(grupo H)
-    //return PiezaPendiente('RejillaArmas · ${armas.length} armas, ${elegidas.length}/$maxArmas', alto: 220);
     return GridView.count(
       crossAxisCount: 2,
       mainAxisSpacing: ArenaMedidas.s8,
       crossAxisSpacing: ArenaMedidas.s16,
       children: [
         for (var arma in armas)
-          Container(
-            decoration: BoxDecoration(
-              color: elegidas.contains(arma)
+          OutlinedButton.icon(
+            onPressed: () => onAlternar(arma),
+            style: OutlinedButton.styleFrom(
+              backgroundColor: elegidas.contains(arma)
                   ? ArenaColors.superficieAlta
                   : ArenaColors.superficie,
-              borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
-              border: Border.all(
+              side: BorderSide(
                 color: elegidas.contains(arma)
                     ? ArenaColors.dorado
                     : ArenaColors.borde,
@@ -51,17 +49,16 @@ class RejillaArmas extends StatelessWidget {
                     ? ArenaMedidas.grosorBordeSeleccion
                     : ArenaMedidas.grosorBorde,
               ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+              ),
             ),
-            child: Row(
+            icon: Image.asset(arma.imagen),
+            label: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(arma.imagen),
-                Expanded(
-                  child: Column(
-                    children: [
-                      Text(arma.nombre),
-                      Text(arma.bonus.toString())],
-                  ),
-                ),
+                Text(arma.nombre),
+                Text(arma.bonus.toString()),
               ],
             ),
           ),
