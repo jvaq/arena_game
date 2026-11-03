@@ -12,6 +12,7 @@ import '../pieza_pendiente.dart';
 ///  - Color de la barra = `color`; fondo `ArenaColors.superficieAlta`.
 ///
 /// NO cambies el constructor.
+
 class BarrasStats extends StatelessWidget {
   const BarrasStats({
     super.key,
@@ -28,5 +29,10 @@ class BarrasStats extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO(grupo G)
     return PiezaPendiente('BarrasStats · ${stats}', alto: 120);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: Row(),
+    );
   }
 }
