@@ -32,15 +32,15 @@ class SelectorClase extends StatelessWidget {
           children: [
            Padding(
              padding: EdgeInsets.all(ArenaMedidas.s8),
-             child: SelectorPersonaje(tipo: "Caballero"),
+             child: SelectorPersonaje(tipo: "caballero"),
            ),
             Padding(
               padding: EdgeInsets.all(ArenaMedidas.s8),
-              child: SelectorPersonaje(tipo: "Orco"),
+              child: SelectorPersonaje(tipo: "orco"),
             ),
             Padding(
               padding: EdgeInsets.all(ArenaMedidas.s8),
-              child: SelectorPersonaje(tipo: "Mago"),
+              child: SelectorPersonaje(tipo: "mago"),
             )
           ],
         ),
