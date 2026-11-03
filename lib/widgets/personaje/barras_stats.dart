@@ -32,7 +32,50 @@ class BarrasStats extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: Row(),
+      children: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:<Widget>[
+          Icon(ArenaAssets.iconoVida),
+          Text('Vida'),
+          Expanded(
+            child: LinearProgressIndicator(
+            value: (stats.vida / maxPuntosBarra).clamp(0.0, 1.0),
+            color: ArenaColors.positivo,
+            backgroundColor: ArenaColors.superficieAlta,
+          ),
+          Text('${stats.vida}'),
+        ],
+      ),
+      Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children:<Widget>[
+          Icon(ArenaAssets.iconoAtaque),
+      Text('Ataque'),
+      Expanded(
+        child: LinearProgressIndicator(
+          value: (stats.ataque / maxPuntosBarra).clamp(0.0, 1.0),
+          color: ArenaColors.negativo,
+          backgroundColor: ArenaColors.superficieAlta,
+        ),
+        Text('${stats.ataque}'),
+        ],
+      ),Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children:<Widget>[
+        Icon(ArenaAssets.iconoVelocidad),
+      Text('Velocidad'),
+      Expanded(
+        child: LinearProgressIndicator(
+          value: (stats.velocidad / maxPuntosBarra).clamp(0.0, 1.0),
+          color: ArenaColors.dorado,
+          backgroundColor: ArenaColors.superficieAlta,
+        ),
+        Text('${stats.velocidad}'),
+        ],
+      ),
     );
   }
 }
