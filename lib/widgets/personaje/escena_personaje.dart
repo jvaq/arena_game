@@ -21,54 +21,39 @@ class EscenaPersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300, width: double.infinity,
-      child: Stack(
-        alignment: Alignment.bottomCenter,
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-            ArenaAssets.fondo,
-            fit:BoxFit.cover,
-        ),
-        ),
-          Positioned(
-            bottom: 0,
-            child: Image.asset(ArenaAssets.plataforma,
-              width: 240, height: 110,
-              fit:BoxFit.contain,
-            ),
-          ),
-
-          Positioned(
-            bottom: 35,
-            child: Image.asset(clase.imagen,
-              width: 190, height: 245,
-              fit:BoxFit.contain,
-            ),
-          ),
-          if(armas.isNotEmpty)
-
-            Positioned(left: 20, bottom: 0, child:
-            Image.asset(armas[0].imagen, width: 65, height: 75, fit:BoxFit.contain,
-              ),
-            ),
+    return Container(
+      child: Row(children: [
+        ArmaImagen(armaseleccionada: armas.first),
+        ImagenPersonaje(personaje: clase),
+        ArmaImagen(armaseleccionada: armas.last),
 
 
-
-
-
-          if(armas.length>1)
-
-            Positioned(
-              right: 20,
-              bottom: 55,
-              child: Image.asset(armas[1].imagen,width: 65, height: 75, fit:BoxFit.contain,
-              ),
-            ),
-        ],
-      )
+      ],),
     );
-    return PiezaPendiente('EscenaPersonaje · ${clase.nombre} (${armas.length} armas)', alto: 300);
+  }
+}
+
+class ArmaImagen extends StatelessWidget {
+  const ArmaImagen({super.key, required this.armaseleccionada});
+
+  final Arma armaseleccionada;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+        ArenaAssets.arma(armaseleccionada.nombre, armaseleccionada.id));
+  }
+}
+
+class ImagenPersonaje extends StatelessWidget {
+  const ImagenPersonaje({super.key, required this.personaje});
+
+  final ClasePersonaje personaje;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(ArenaAssets.personaje(personaje.nombre));
   }
 }
