@@ -1,3 +1,4 @@
+import 'package:arena_game/theme/arena_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
@@ -20,7 +21,66 @@ class EscenaPersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(grupo E)
+    return SizedBox(
+      height: 300,
+      width: double.infinity,
+      child: Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+            ArenaAssets.fondo,
+            fit:BoxFit.cover,
+        ),
+        ),
+          Positioned(
+            bottom: 0,
+            child: Image.asset(ArenaAssets.plataforma,
+              width: 240,
+              height: 110,
+              fit:BoxFit.contain,
+            ),
+          ),
+
+          Positioned(
+            bottom: 35,
+            child: Image.asset(clase.imagen,
+              width: 190,
+              height: 245,
+              fit:BoxFit.contain,
+            ),
+          ),
+          if(armas.isNotEmpty)
+
+            Positioned(
+              left: 20,
+              bottom: 0,
+
+              child: Image.asset(armas[0].imagen,
+                width: 65,
+                height: 75,
+                fit:BoxFit.contain,
+              ),
+            ),
+
+
+
+
+
+          if(armas.length>1)
+
+            Positioned(
+              right: 20,
+              bottom: 55,
+              child: Image.asset(armas[1].imagen,
+                width: 65,
+                height: 75,
+                fit:BoxFit.contain,
+              ),
+            ),
+        ],
+      )
+    );
     return PiezaPendiente('EscenaPersonaje · ${clase.nombre} (${armas.length} armas)', alto: 300);
   }
 }
