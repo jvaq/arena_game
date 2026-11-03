@@ -7,6 +7,7 @@ import '../widgets/ranking/estados_ranking.dart';
 import '../widgets/ranking/fila_ranking.dart';
 import '../widgets/ranking/tarjeta_tu_posicion.dart';
 
+
 /// Pantalla 1 · Ranking. La monta el profesor (o el grupo de integración).
 /// Ensambla las piezas A, B, C y D. No hay que tocarla para hacer una pieza.
 class PantallaRanking extends StatefulWidget {
@@ -28,6 +29,10 @@ class _PantallaRankingState extends State<PantallaRanking> {
 
   void _reintentar() => setState(() => _futuro = _servicio.cargarRanking());
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +48,8 @@ class _PantallaRankingState extends State<PantallaRanking> {
           }
           final ranking = snap.data!;
           if (ranking.top.isEmpty) return const RankingVacio();
+
+
 
           return Column(
             children: [

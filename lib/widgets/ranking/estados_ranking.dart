@@ -26,7 +26,7 @@ class RankingError extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo C)
-    return PiezaPendiente('RankingError · $mensaje');
+    return Text('RankingError · $mensaje');
   }
 }
 
@@ -37,6 +37,6 @@ class RankingVacio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo C)
-    return const PiezaPendiente('RankingVacio');
+    return const Text("Aun no hay datos");
   }
 }
