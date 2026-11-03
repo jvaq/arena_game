@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:arena_game/theme/arena_theme.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
 
 /// PIEZA H · Rejilla 2×2 con las armas de la clase.
 ///
@@ -30,6 +30,42 @@ class RejillaArmas extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo H)
-    return PiezaPendiente('RejillaArmas · ${armas.length} armas, ${elegidas.length}/$maxArmas', alto: 220);
+    //return PiezaPendiente('RejillaArmas · ${armas.length} armas, ${elegidas.length}/$maxArmas', alto: 220);
+    return GridView.count(
+      crossAxisCount: 2,
+      mainAxisSpacing: ArenaMedidas.s8,
+      crossAxisSpacing: ArenaMedidas.s16,
+      children: [
+        for (var arma in armas)
+          Container(
+            decoration: BoxDecoration(
+              color: elegidas.contains(arma)
+                  ? ArenaColors.superficieAlta
+                  : ArenaColors.superficie,
+              borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+              border: Border.all(
+                color: elegidas.contains(arma)
+                    ? ArenaColors.dorado
+                    : ArenaColors.borde,
+                width: elegidas.contains(arma)
+                    ? ArenaMedidas.grosorBordeSeleccion
+                    : ArenaMedidas.grosorBorde,
+              ),
+            ),
+            child: Row(
+              children: [
+                Image.asset(arma.imagen),
+                Expanded(
+                  child: Column(
+                    children: [
+                      Text(arma.nombre),
+                      Text(arma.bonus.toString())],
+                  ),
+                ),
+              ],
+            ),
+          ),
+      ],
+    );
   }
 }
