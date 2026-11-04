@@ -38,15 +38,13 @@ class RejillaArmas extends StatelessWidget {
     if (arma.bonus.ataque > 0) {
       if (bonusFormateado.isNotEmpty) {
         bonusFormateado += " · +${arma.bonus.ataque} atq";
-      }
-      else {
+      } else {
         bonusFormateado = "+${arma.bonus.ataque} atq";
       }
     } else if (arma.bonus.ataque < 0) {
       if (bonusFormateado.isNotEmpty) {
         bonusFormateado += " · ${arma.bonus.ataque} atq";
-      }
-      else {
+      } else {
         bonusFormateado = "${arma.bonus.ataque} atq";
       }
     }
@@ -54,15 +52,13 @@ class RejillaArmas extends StatelessWidget {
     if (arma.bonus.velocidad > 0) {
       if (bonusFormateado.isNotEmpty) {
         bonusFormateado += " · +${arma.bonus.velocidad} vel";
-      }
-      else {
+      } else {
         bonusFormateado = "+${arma.bonus.velocidad} vel";
       }
     } else if (arma.bonus.velocidad < 0) {
       if (bonusFormateado.isNotEmpty) {
         bonusFormateado += " · ${arma.bonus.velocidad} vel";
-      }
-      else {
+      } else {
         bonusFormateado = "${arma.bonus.velocidad} vel";
       }
     }
@@ -71,55 +67,79 @@ class RejillaArmas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      crossAxisCount: 2,
-      mainAxisSpacing: ArenaMedidas.s8,
-      crossAxisSpacing: ArenaMedidas.s8,
-      childAspectRatio: 2,   //Hace que sea rectangular
+    return Column(
       children: [
-        for (var arma in armas)
-          OutlinedButton.icon(
-            onPressed: () => onAlternar(arma),
-            style: OutlinedButton.styleFrom(
-              backgroundColor: elegidas.contains(arma)
-                  ? ArenaColors.superficieAlta
-                  : ArenaColors.superficie,
-              side: BorderSide(
-                color: elegidas.contains(arma)
-                    ? ArenaColors.dorado
-                    : ArenaColors.borde,
-                width: elegidas.contains(arma)
-                    ? ArenaMedidas.grosorBordeSeleccion
-                    : ArenaMedidas.grosorBorde,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text("ARMAS", style: ArenaTextos.subtitulo),
+            Text(
+              "${elegidas.length} / 2 elegidas",
+              style: ArenaTextos.cuerpoSuave.copyWith(
+                color: ArenaColors.dorado,
+                fontWeight: FontWeight.w600,
               ),
             ),
-            icon: SizedBox(
-              width: 50,
-              height: 50,
-              child: Image.asset(arma.imagen)
-            ),
-            label: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start, // texto a la izq
-              children: [
-                Text(
-                  arma.nombre,
-                  style: ArenaTextos.cuerpo,
-                  maxLines: 2,
-                  overflow: TextOverflow.visible,
+          ],
+        ),
+        const SizedBox(height: ArenaMedidas.s8),
+        GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: ArenaMedidas.s8,
+          crossAxisSpacing: ArenaMedidas.s8,
+          childAspectRatio: 2.2,
+          shrinkWrap: true, // Evita el error de altura infinita
+          physics: const NeverScrollableScrollPhysics(), // Evita conflictos de scroll
+          children: [
+            for (var arma in armas)
+              OutlinedButton.icon(
+                onPressed: () => onAlternar(arma),
+                style: OutlinedButton.styleFrom(
+                  backgroundColor: elegidas.contains(arma)
+                      ? ArenaColors.superficieAlta
+                      : ArenaColors.superficie,
+                  side: BorderSide(
+                    color: elegidas.contains(arma)
+                        ? ArenaColors.dorado
+                        : ArenaColors.borde,
+                    width: elegidas.contains(arma)
+                        ? ArenaMedidas.grosorBordeSeleccion
+                        : ArenaMedidas.grosorBorde,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      ArenaMedidas.radioTarjeta,
+                    ),
+                  ),
                 ),
-                Text(
-                  _formatearAtaque(arma),
-                  style: ArenaTextos.cuerpoSuave,
-                  maxLines: 2,
-                  overflow: TextOverflow.visible,
+                icon: SizedBox(
+                  width: 60,
+                  height: 60,
+                  child: Image.asset(arma.imagen),
                 ),
-              ],
-            ),
-          ),
+                label: Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        arma.nombre,
+                        style: ArenaTextos.cuerpo.copyWith(fontSize: 14),
+                        maxLines: 2,
+                        overflow: TextOverflow.visible,
+                      ),
+                      Text(
+                        _formatearAtaque(arma),
+                        style: ArenaTextos.cuerpoSuave.copyWith(fontSize: 11),
+                        maxLines: 2,
+                        overflow: TextOverflow.visible,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+          ],
+        ),
       ],
     );
   }
