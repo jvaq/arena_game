@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
+import '../../models/stats.dart';
+import '../../theme/arena_assets.dart';
+import '../../theme/arena_theme.dart';
 
 /// PIEZA G · Tres barras de stats (vida, ataque, velocidad).
 ///
@@ -12,6 +14,7 @@ import '../pieza_pendiente.dart';
 ///  - Color de la barra = `color`; fondo `ArenaColors.superficieAlta`.
 ///
 /// NO cambies el constructor.
+
 class BarrasStats extends StatelessWidget {
   const BarrasStats({
     super.key,
@@ -26,7 +29,128 @@ class BarrasStats extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(grupo G)
-    return PiezaPendiente('BarrasStats · ${stats}', alto: 120);
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              ArenaAssets.iconoVida,
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 80,
+              child: Text(
+                'Vida',
+                style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: (stats.vida / maxPuntosBarra).clamp(0.0, 1.0),
+                    minHeight: 12,
+                    color: ArenaColors.positivo,
+                    backgroundColor: ArenaColors.superficieAlta,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              '${stats.vida}',
+              style: ArenaTextos.puntos.copyWith(color: ArenaColors.texto),
+            ),
+          ],
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              ArenaAssets.iconoAtaque,
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 80,
+              child: Text(
+                'Ataque',
+                style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: (stats.ataque / maxPuntosBarra).clamp(0.0, 1.0),
+                    minHeight: 12,
+                    color: ArenaColors.negativo,
+                    backgroundColor: ArenaColors.superficieAlta,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              '${stats.ataque}',
+              style: ArenaTextos.puntos.copyWith(color: ArenaColors.texto),
+            ),
+          ],
+        ),
+
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Image.asset(
+              ArenaAssets.iconoVelocidad,
+              width: 24,
+              height: 24,
+            ),
+            const SizedBox(width: 8),
+            SizedBox(
+              width: 80,
+              child: Text(
+                'Velocidad',
+                style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
+              ),
+            ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(6),
+                  child: LinearProgressIndicator(
+                    value: (stats.velocidad / maxPuntosBarra).clamp(0.0, 1.0),
+                    minHeight: 12,
+                    color: ArenaColors.dorado,
+                    backgroundColor: ArenaColors.superficieAlta,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              '${stats.velocidad}',
+              style: ArenaTextos.puntos.copyWith(color: ArenaColors.texto),
+            ),
+          ],
+        ),
+      ],
+    );
   }
 }
