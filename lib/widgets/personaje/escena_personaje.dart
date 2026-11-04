@@ -35,15 +35,8 @@ class EscenaPersonaje extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          // 1. TÍTULO
-          Text(
-            'TU PERSONAJE',
-            style: ArenaTextos.subtitulo.copyWith(
-              fontSize: 26,
-              letterSpacing: 2.5,
-            ),
-          ),
-          const SizedBox(height: ArenaMedidas.s16),
+
+
 
           // 2. FILA CENTRAL: Arma 1 | Personaje + Plataforma | Arma 2
           Row(
