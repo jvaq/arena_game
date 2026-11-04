@@ -74,7 +74,7 @@ class RejillaArmas extends StatelessWidget {
     return GridView.count(
       crossAxisCount: 2,
       mainAxisSpacing: ArenaMedidas.s8,
-      crossAxisSpacing: ArenaMedidas.s16,
+      crossAxisSpacing: ArenaMedidas.s8,
       childAspectRatio: 2,   //Hace que sea rectangular
       children: [
         for (var arma in armas)
@@ -97,20 +97,25 @@ class RejillaArmas extends StatelessWidget {
               ),
             ),
             icon: SizedBox(
-              width: 60,
-              height: 60,
+              width: 50,
+              height: 50,
               child: Image.asset(arma.imagen)
             ),
             label: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start, // texto a la izq
               children: [
                 Text(
                   arma.nombre,
                   style: ArenaTextos.cuerpo,
+                  maxLines: 2,
+                  overflow: TextOverflow.visible,
                 ),
                 Text(
                   _formatearAtaque(arma),
                   style: ArenaTextos.cuerpoSuave,
+                  maxLines: 2,
+                  overflow: TextOverflow.visible,
                 ),
               ],
             ),
