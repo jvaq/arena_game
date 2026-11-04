@@ -75,6 +75,7 @@ class RejillaArmas extends StatelessWidget {
       crossAxisCount: 2,
       mainAxisSpacing: ArenaMedidas.s8,
       crossAxisSpacing: ArenaMedidas.s16,
+      childAspectRatio: 2,   //Hace que sea rectangular
       children: [
         for (var arma in armas)
           OutlinedButton.icon(
