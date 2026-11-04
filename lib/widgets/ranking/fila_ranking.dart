@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
+import '../../theme/arena_assets.dart';
+import '../../theme/arena_theme.dart';
+
 
 /// PIEZA A · Fila del ranking.
 ///
@@ -11,7 +13,7 @@ import '../pieza_pendiente.dart';
 ///  - Nick (`ArenaTextos.cuerpo`) y `entrada.victoriasDerrotas` (`ArenaTextos.etiqueta`).
 ///  - Puntos a la derecha (`ArenaTextos.puntos`).
 ///  - Si `entrada.posicion == 1`: borde dorado.
-///  - Si `resaltada` es true: fondo `superficieAlta` (para tu fila dentro del top 10).
+///  - Si `resaltada` es true: fondo `superficieAlta` (para tu fila dentro del top 10). //se hace con un if/else
 ///
 /// NO cambies el constructor: el resto de piezas dependen de él.
 class FilaRanking extends StatelessWidget {
@@ -22,7 +24,66 @@ class FilaRanking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(grupo A): sustituye este placeholder por la fila real.
-    return PiezaPendiente('FilaRanking · ${entrada.posicion} ${entrada.nick}', alto: 52);
+    final medalla = ArenaAssets.medalla(entrada.posicion); //recibe clase de medalla
+    Color colorFondo;
+    if(resaltada){
+      colorFondo= ArenaColors.superficieAlta;
+    }else{
+      colorFondo= ArenaColors.superficie;
+    }
+
+
+    return Container( //container.. que tiene como hijo un row y sus hijos con sus caracteristicas
+      height: 52,
+      padding: const EdgeInsets.symmetric(horizontal: ArenaMedidas.s8),
+      decoration: BoxDecoration(
+        color:colorFondo,
+
+        borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+        border: Border.all(
+          color: entrada.posicion == 1 ? ArenaColors.dorado : ArenaColors.borde,
+          width: ArenaMedidas.grosorBorde,
+        ),
+      ),
+      child: Row(children: [ //los hijos del chil que tiene:
+        SizedBox(
+          width: 36,
+          //hijo medalla previamente medalla es un objeto que acepta null String?medalla
+          child: medalla != null
+              //usa el switch de medalla si no cumple no asigna meddalla solo texto
+              ? Image.asset(medalla)
+              : Text('${entrada.posicion}', textAlign: TextAlign.center, style: ArenaTextos.subtitulo),
+        ),
+        const SizedBox(width: ArenaMedidas.s8),
+        // avatar con borde de color de clase ...
+        // Avatar circular con borde del color de la clase
+        Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,//forma circular
+            border: Border.all(color: ArenaColors.deClase(entrada.clase), width: 2), //se cambia clase por entrada.clase
+            //porque entrada ya usa la clase EntradaRanking y que esto llama sus datos de un fromJson.
+          ),
+          //recorta la imagen, boxshape solo le da la forma circular mas no hace el recorte de la imagen por eso es necesario clipOval widget
+          child: ClipOval(
+            //
+            child: Image.asset(ArenaAssets.avatar(entrada.clase), width: 38, height: 38, fit: BoxFit.cover),
+          ),
+        ),
+        Expanded(
+          //penultimo hijo tiene una columna con dos texto
+          child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(entrada.nick, style: ArenaTextos.cuerpo, overflow: TextOverflow.ellipsis),
+            Text(entrada.victoriasDerrotas, style: ArenaTextos.etiqueta),
+          ]),
+        ),
+        const SizedBox(width: ArenaMedidas.s8),
+        // puntaje es un text ultimo hijo que recibe entrada que es una variable declarada previamente como final
+        Text('${entrada.puntos}', style: ArenaTextos.puntos),
+      ]),
+    );
   }
 }
+
+
+
+
