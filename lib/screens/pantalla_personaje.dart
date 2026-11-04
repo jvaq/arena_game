@@ -33,28 +33,19 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
     final catalogo = await Catalogo.cargar();
     setState(() {
       _catalogo = catalogo;
-      _clase = catalogo.clases.first; // Carga el Caballero por defecto
+      _clase = catalogo.clases.first;
     });
   }
 
   /// TODO(grupo I): al cambiar de clase se guarda la nueva y se VACÍA la selección de armas.
   void _cambiarClase(ClasePersonaje nueva) {
-    setState(() {
-      _clase = nueva;
-      _elegidas.clear();
-    });
+    // setState(() { ... });
   }
 
   /// TODO(grupo I): si el arma ya está elegida, quitarla; si no y hay hueco
   /// (`_elegidas.length < _catalogo!.armasPorPersonaje`), añadirla.
   void _alternarArma(Arma arma) {
-    setState(() {
-      if (_elegidas.contains(arma)) {
-        _elegidas.remove(arma);
-      } else if (_elegidas.length < _catalogo!.armasPorPersonaje) {
-        _elegidas.add(arma);
-      }
-    });
+    // setState(() { ... });
   }
 
   /// TODO(grupo I): true solo cuando hay exactamente `armasPorPersonaje` armas elegidas.
@@ -62,11 +53,7 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
 
   /// TODO(grupo I): al pulsar «Guardar». Fase 1: SnackBar con «Personaje guardado».
   /// Fase 2 (opcional): PUT /jugadores/{id}/personaje con la API.
-  void _guardar() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text('Personaje guardado')),
-    );
-  }
+  void _guardar() {}
 
   @override
   Widget build(BuildContext context) {
