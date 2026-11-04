@@ -19,22 +19,18 @@ class EscenaPersonaje extends StatelessWidget {
   final ClasePersonaje clase;
   final List<Arma> armas;
 
-  @override
   Widget build(BuildContext context) {
-    // TODO(grupo E)
     return SizedBox(
-      height: 300, // Altura aproximada requerida
+      height: 300,
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // 1. Fondo (cubriendo todo el espacio del Stack)
+          // 1. Fondo
           Positioned.fill(
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(16), // Opcional: bordes redondeados
+              borderRadius: BorderRadius.circular(16),
               child: Image.asset(
-                // Si te da error ArenaAssets, asegúrate de importar el archivo correcto
-                // o usa directamente 'assets/images/ui/fondo_arena.png'
-                ArenaAssets.fondo,
+                ArenaAssets.fondo, // Volvemos a usar la variable de tu proyecto
                 fit: BoxFit.cover,
               ),
             ),
@@ -42,35 +38,33 @@ class EscenaPersonaje extends StatelessWidget {
 
           // 2. Plataforma (centrada abajo)
           Positioned(
-            bottom: 20,
+            bottom: 15,
             child: Image.asset(
-              ArenaAssets.plataforma,
-              width: 220, // Ajusta según el tamaño real de tu asset
+              ArenaAssets.plataforma, // Volvemos a usar la plataforma correcta
+              width: 220,
             ),
           ),
 
-          // 3. Personaje grande (encima de la plataforma)
+          // 3. Personaje grande
           Positioned(
-            bottom: 45, // Un poco más arriba que la plataforma para que "pise" sobre ella
+            bottom: 40,
             child: Image.asset(
               clase.imagen,
-              height: 200,
+              height: 220,
             ),
           ),
 
-          // 4. Arma 1 (Izquierda) - Solo se muestra si hay al menos 1 arma
+          // 4. Arma 1 (Izquierda)
           if (armas.isNotEmpty)
             Positioned(
               left: 20,
-              top: 80,
               child: _ConstruirCirculoArma(imagen: armas[0].imagen),
             ),
 
-          // 4. Arma 2 (Derecha) - Solo se muestra si hay 2 armas
+          // 4. Arma 2 (Derecha)
           if (armas.length > 1)
             Positioned(
               right: 20,
-              top: 80,
               child: _ConstruirCirculoArma(imagen: armas[1].imagen),
             ),
         ],
@@ -87,15 +81,15 @@ class _ConstruirCirculoArma extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 64,
-      height: 64,
+      width: 68,
+      height: 68,
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: const Color(0xFF1E1E2C), // Color oscuro de fondo
+        color: const Color(0xFF1E1E2C), // Color oscuro del fondo del círculo
         shape: BoxShape.circle,
         border: Border.all(
-          color: const Color(0xFF4A609D), // Borde azulado
-          width: 2,
+          color: const Color(0xFF3B82F6), // Azul claro idéntico a la imagen
+          width: 3.5, // Borde más grueso
         ),
       ),
       child: Image.asset(imagen),
