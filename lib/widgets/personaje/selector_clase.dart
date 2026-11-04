@@ -28,21 +28,23 @@ class SelectorClase extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Row(
-          children: [
-           Padding(
-             padding: EdgeInsets.all(ArenaMedidas.s8),
-             child: SelectorPersonaje(tipo: "caballero"),
-           ),
-            Padding(
-              padding: EdgeInsets.all(ArenaMedidas.s8),
-              child: SelectorPersonaje(tipo: "orco"),
-            ),
-            Padding(
-              padding: EdgeInsets.all(ArenaMedidas.s8),
-              child: SelectorPersonaje(tipo: "mago"),
-            )
-          ],
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(ArenaMedidas.s8),
+            child: SelectorPersonaje(tipo: "caballero"),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(ArenaMedidas.s8),
+            child: SelectorPersonaje(tipo: "orco"),
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(ArenaMedidas.s8),
+            child: SelectorPersonaje(tipo: "mago"),
+          ),
         ),
       ],
     );
@@ -53,23 +55,23 @@ class SelectorPersonaje extends StatelessWidget {
   SelectorPersonaje({super.key, required this.tipo});
 
   String tipo;
+
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: ArenaColors.fondo,
-          borderRadius: BorderRadius.circular(ArenaMedidas.radioBoton)
+        color: ArenaColors.fondo,
+        borderRadius: BorderRadius.circular(ArenaMedidas.radioBoton),
       ),
       child: Row(
         children: [
           AvatarCirculo(tipo: tipo),
-          Text(tipo)
+          Text(tipo),
         ],
       ),
-    ) ;
+    );
   }
 }
-
 
 class AvatarCirculo extends StatelessWidget {
   AvatarCirculo({super.key, required this.tipo});
@@ -78,6 +80,13 @@ class AvatarCirculo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(ArenaAssets.avatar(tipo));
+    return CircleAvatar(
+      radius: 20,
+      backgroundColor: ArenaColors.fondo,
+      child: Image.asset(
+          ArenaAssets.avatar(tipo),
+        fit: BoxFit.cover,
+      ),
+    );
   }
 }
