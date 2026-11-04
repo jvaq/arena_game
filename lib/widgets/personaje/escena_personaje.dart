@@ -22,13 +22,16 @@ class EscenaPersonaje extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Row(children: [
-        ArmaImagen(armaseleccionada: armas.first),
-        ImagenPersonaje(personaje: clase),
-        ArmaImagen(armaseleccionada: armas.last),
-
-
-      ],),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          if(armas.isNotEmpty)
+          ArmaImagen(armaseleccionada: armas.first),
+          ImagenPersonaje(personaje: clase),
+          if(armas.length>1)
+          ArmaImagen(armaseleccionada: armas.last),
+        ],
+      ),
     );
   }
 }
@@ -38,11 +41,14 @@ class ArmaImagen extends StatelessWidget {
 
   final Arma armaseleccionada;
 
-
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-        ArenaAssets.arma(armaseleccionada.nombre, armaseleccionada.id));
+      ArenaAssets.arma(armaseleccionada.nombre, armaseleccionada.id),
+      width: 65,
+      height: 65,
+      fit: BoxFit.contain,
+    );
   }
 }
 
@@ -51,9 +57,13 @@ class ImagenPersonaje extends StatelessWidget {
 
   final ClasePersonaje personaje;
 
-
   @override
   Widget build(BuildContext context) {
-    return Image.asset(ArenaAssets.personaje(personaje.nombre));
+    return Image.asset(
+      ArenaAssets.personaje(personaje.nombre),
+      width: 180,
+      height: 220,
+      fit: BoxFit.contain,
+    );
   }
 }
