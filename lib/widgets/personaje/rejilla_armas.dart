@@ -27,6 +27,48 @@ class RejillaArmas extends StatelessWidget {
   final Color colorClase;
   final ValueChanged<Arma> onAlternar;
 
+  String _formatearAtaque(Arma arma) {
+    String bonusFormateado = "";
+    if (arma.bonus.vida > 0) {
+      bonusFormateado = "+${arma.bonus.vida} vida";
+    } else if (arma.bonus.vida < 0) {
+      bonusFormateado = "${arma.bonus.vida} vida";
+    }
+
+    if (arma.bonus.ataque > 0) {
+      if (bonusFormateado.isNotEmpty) {
+        bonusFormateado += " · +${arma.bonus.ataque} atq";
+      }
+      else {
+        bonusFormateado = "+${arma.bonus.ataque} atq";
+      }
+    } else if (arma.bonus.ataque < 0) {
+      if (bonusFormateado.isNotEmpty) {
+        bonusFormateado += " · ${arma.bonus.ataque} atq";
+      }
+      else {
+        bonusFormateado = "${arma.bonus.ataque} atq";
+      }
+    }
+
+    if (arma.bonus.velocidad > 0) {
+      if (bonusFormateado.isNotEmpty) {
+        bonusFormateado += " · +${arma.bonus.velocidad} vel";
+      }
+      else {
+        bonusFormateado = "+${arma.bonus.velocidad} vel";
+      }
+    } else if (arma.bonus.velocidad < 0) {
+      if (bonusFormateado.isNotEmpty) {
+        bonusFormateado += " · ${arma.bonus.velocidad} vel";
+      }
+      else {
+        bonusFormateado = "${arma.bonus.velocidad} vel";
+      }
+    }
+    return bonusFormateado;
+  }
+
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -53,12 +95,22 @@ class RejillaArmas extends StatelessWidget {
                 borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
               ),
             ),
-            icon: Image.asset(arma.imagen),
+            icon: SizedBox(
+              width: 60,
+              height: 60,
+              child: Image.asset(arma.imagen)
+            ),
             label: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(arma.nombre),
-                Text(arma.bonus.toString()),
+                Text(
+                  arma.nombre,
+                  style: ArenaTextos.cuerpo,
+                ),
+                Text(
+                  _formatearAtaque(arma),
+                  style: ArenaTextos.cuerpoSuave,
+                ),
               ],
             ),
           ),
