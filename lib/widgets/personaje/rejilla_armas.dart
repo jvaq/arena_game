@@ -85,7 +85,7 @@ class RejillaArmas extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: ArenaMedidas.s8),
+        const SizedBox(height: ArenaMedidas.s8),  //espacio fijo entre el titulo y las armas
         GridView.count(
           crossAxisCount: 2,
           childAspectRatio: 2.0,
@@ -99,6 +99,7 @@ class RejillaArmas extends StatelessWidget {
                 clipBehavior: Clip.none, // Permite que el círculo sobresalga
                 children: [
                   Opacity(
+                    //hace que la tarjeta se vea menos opaca si no esta seleccionada, y mas opaca si lo está
                     opacity: (maxAlcanzado && !elegidas.contains(arma)) ? 0.4 : 1.0,
                     child: OutlinedButton(
                       onPressed: () => onAlternar(arma),
@@ -122,8 +123,8 @@ class RejillaArmas extends StatelessWidget {
                       child: Row(
                         children: [
                           SizedBox(
-                            width: 42,
-                            height: 42,
+                            width: 50,
+                            height: 50,
                             child: Image.asset(arma.imagen, fit: BoxFit.contain),
                           ),
                           const SizedBox(width: 6),
