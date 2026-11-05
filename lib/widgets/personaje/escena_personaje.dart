@@ -55,18 +55,20 @@ class EscenaPersonaje extends StatelessWidget {
           ),
 
           // 4. Arma 1 (Izquierda)
-          if (armas.isNotEmpty)
-            Positioned(
-              left: 20,
-              child: _ConstruirCirculoArma(imagen: armas[0].imagen),
-            ),
+          Positioned(
+            left: 20,
+            child: armas.isNotEmpty
+                ? _ConstruirCirculoArma(imagen: armas[0].imagen)
+                : const _HuecoArma(texto: 'Arma 1'),
+          ),
 
           // 4. Arma 2 (Derecha)
-          if (armas.length > 1)
-            Positioned(
-              right: 20,
-              child: _ConstruirCirculoArma(imagen: armas[1].imagen),
-            ),
+          Positioned(
+            right: 20,
+            child: armas.length > 1
+                ? _ConstruirCirculoArma(imagen: armas[1].imagen)
+                : const _HuecoArma(texto: 'Arma 2'),
+          ),
         ],
       ),
     );
@@ -93,6 +95,37 @@ class _ConstruirCirculoArma extends StatelessWidget {
         ),
       ),
       child: Image.asset(imagen),
+    );
+  }
+}
+
+// NUEVO WIDGET: Dibuja el círculo semitransparente para los huecos vacíos
+class _HuecoArma extends StatelessWidget {
+  final String texto;
+
+  const _HuecoArma({required this.texto});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 68,
+      height: 68,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.white24, // Borde suave para simular el espacio vacío
+          width: 2,
+        ),
+      ),
+      child: Text(
+        texto,
+        style: const TextStyle(
+          color: Colors.white54,
+          fontSize: 13,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
     );
   }
 }
