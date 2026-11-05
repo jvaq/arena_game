@@ -21,14 +21,21 @@ class EscenaPersonaje extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 300,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(ArenaAssets.fondo),
+          fit: BoxFit.cover,
+        ),
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          if(armas.isNotEmpty)
-            ArmaImagen(armaseleccionada: armas.first),
-          ImagenPersonaje(personaje: clase),
-          if(armas.length>1)
-            ArmaImagen(armaseleccionada: armas.last),
+          if (armas.isNotEmpty) ArmaImagen(armaseleccionada: armas.first),
+          Expanded(child:ImagenPersonaje(personaje: clase),),
+
+          if (armas.length > 1) ArmaImagen(armaseleccionada: armas.last),
         ],
       ),
     );
