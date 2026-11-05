@@ -29,7 +29,7 @@ class FilaRanking extends StatelessWidget {
     return Container(child: Row(children: [
       Padding(
         padding: EdgeInsets.all(ArenaMedidas.s8),
-        child: RankingNumber(rankingNumber: 3),
+        child: RankingNumber(rankingNumber: 1),
       ),
       AvatarCirculo(clasePersonaje: "orco"),
       NombrePersonaje(nombre: "Aria"),
@@ -77,8 +77,7 @@ class NombrePersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(ArenaAssets.personaje(nombre),
-      
+    return Text(ArenaAssets.personaje(nombre)
     );
   }
 }
