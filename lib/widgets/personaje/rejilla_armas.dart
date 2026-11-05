@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import '../../models/models.dart';
 
-/// GRUPO H - Rejilla de armas del personaje.
+/// GRUPO H - Rejilla de armas.
 class RejillaArmas extends StatelessWidget {
   const RejillaArmas({
     super.key,
@@ -19,20 +19,28 @@ class RejillaArmas extends StatelessWidget {
   final Color colorClase;
   final ValueChanged<Arma> onAlternar;
 
-  // Convierte los bonus del arma en texto.
+  static const Color colorSeleccion = Color(0xFFF5B941);
+
+  // Convierte las bonificaciones en texto.
   String obtenerBonus(Arma arma) {
     List<String> bonus = [];
 
     if (arma.bonus.vida != 0) {
-      bonus.add('${arma.bonus.vida > 0 ? '+' : ''}${arma.bonus.vida} vida');
+      bonus.add(
+        '${arma.bonus.vida > 0 ? '+' : ''}${arma.bonus.vida} vida',
+      );
     }
 
     if (arma.bonus.ataque != 0) {
-      bonus.add('${arma.bonus.ataque > 0 ? '+' : ''}${arma.bonus.ataque} ataque');
+      bonus.add(
+        '${arma.bonus.ataque > 0 ? '+' : ''}${arma.bonus.ataque} atq',
+      );
     }
 
     if (arma.bonus.velocidad != 0) {
-      bonus.add('${arma.bonus.velocidad > 0 ? '+' : ''}${arma.bonus.velocidad} vel.');
+      bonus.add(
+        '${arma.bonus.velocidad > 0 ? '+' : ''}${arma.bonus.velocidad} vel',
+      );
     }
 
     return bonus.isEmpty ? 'Sin bonus' : bonus.join(' · ');
@@ -43,7 +51,7 @@ class RejillaArmas extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Título y contador de armas elegidas.
+        // Título y contador.
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -52,14 +60,15 @@ class RejillaArmas extends StatelessWidget {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
+                color: Colors.white,
               ),
             ),
             Text(
               '${elegidas.length}/$maxArmas elegidas',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.bold,
-                color: colorClase,
+                color: colorSeleccion,
               ),
             ),
           ],
@@ -87,97 +96,112 @@ class RejillaArmas extends StatelessWidget {
                   (elemento) => elemento.id == arma.id,
             );
 
-            // Comprueba si ya se alcanzó el máximo.
+            // Comprueba si se ha alcanzado el límite.
             final limiteAlcanzado =
                 elegidas.length >= maxArmas && !seleccionada;
 
-            return InkWell(
-              borderRadius: BorderRadius.circular(12),
-
-              // Notifica a la pantalla qué arma se ha pulsado.
-              onTap: () => onAlternar(arma),
-
-              child: Opacity(
-                opacity: limiteAlcanzado ? 0.5 : 1.0,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: seleccionada
-                        ? colorClase.withValues(alpha: 0.15)
-                        : const Color(0xFF211B35),
+            return Stack(
+              clipBehavior: Clip.none,
+              children: [
+                // Tarjeta del arma.
+                Positioned.fill(
+                  child: InkWell(
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: seleccionada
-                          ? colorClase
-                          : const Color(0xFF40345E),
-                      width: seleccionada ? 2 : 1,
-                    ),
-                  ),
-
-                  child: Stack(
-                    children: [
-                      Row(
-                        children: [
-                          // Imagen del arma.
-                          Image.asset(
-                            arma.imagen,
-                            width: 40,
-                            height: 40,
-                            fit: BoxFit.contain,
-                          ),
-
-                          const SizedBox(width: 6),
-
-                          // Nombre y estadísticas.
-                          Expanded(
-                            child: Column(
-                              mainAxisAlignment:
-                              MainAxisAlignment.center,
-                              crossAxisAlignment:
-                              CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  arma.nombre,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 11,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-
-                                const SizedBox(height: 4),
-
-                                Text(
-                                  obtenerBonus(arma),
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(
-                                    fontSize: 10,
-                                    color: Colors.white70,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      // Marca de arma seleccionada.
-                      if (seleccionada)
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: Icon(
-                            Icons.check_circle,
-                            color: colorClase,
-                            size: 18,
+                    onTap: () => onAlternar(arma),
+                    child: Opacity(
+                      opacity: limiteAlcanzado ? 0.65 : 1.0,
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          color: seleccionada
+                              ? const Color(0xFF2A2343)
+                              : const Color(0xFF211B35),
+                          borderRadius: BorderRadius.circular(12),
+                          border: Border.all(
+                            color: seleccionada
+                                ? colorSeleccion
+                                : const Color(0xFF40345E),
+                            width: seleccionada ? 2.5 : 1.5,
                           ),
                         ),
-                    ],
+                        child: Row(
+                          children: [
+                            // Imagen del arma.
+                            Image.asset(
+                              arma.imagen,
+                              width: 40,
+                              height: 40,
+                              fit: BoxFit.contain,
+                            ),
+
+                            const SizedBox(width: 6),
+
+                            // Nombre y bonificaciones.
+                            Expanded(
+                              child: Column(
+                                mainAxisAlignment:
+                                MainAxisAlignment.center,
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    arma.nombre,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 4),
+
+                                  Text(
+                                    obtenerBonus(arma),
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(
+                                      fontSize: 10,
+                                      color: Color(0xFFB8ADC9),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+
+                // Check en la esquina superior derecha.
+                if (seleccionada)
+                  Positioned(
+                    top: 0,
+                    right: 0,
+                    child: IgnorePointer(
+                      child: Transform.translate(
+                        offset: const Offset(7, -7),
+                        child: Container(
+                          width: 28,
+                          height: 28,
+                          decoration: const BoxDecoration(
+                            color: colorSeleccion,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.check,
+                            color: Color(0xFF211B35),
+                            size: 20,
+                            weight: 900,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
             );
           },
         ),
