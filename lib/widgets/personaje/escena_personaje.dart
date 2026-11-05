@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
@@ -128,4 +130,50 @@ class _HuecoArma extends StatelessWidget {
       ),
     );
   }
+}
+
+// --- PINTOR PERSONALIZADO PARA EL BORDE PUNTEADO CIRCULAR ---
+class _PintorBordePunteado extends CustomPainter {
+  final Color color;
+  final double grosor;
+  final double longitudTrazo;
+  final double espacioTrazo;
+
+  _PintorBordePunteado({
+    required this.color,
+    required this.grosor,
+    required this.longitudTrazo,
+    required this.espacioTrazo,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = grosor
+      ..style = PaintingStyle.stroke;
+
+    final center = Offset(size.width / 2, size.height / 2);
+    final radius = size.width / 2;
+
+    final double anguloTrazo = longitudTrazo / radius;
+    final double anguloEspacio = espacioTrazo / radius;
+
+    double anguloActual = 0;
+
+    // Dibuja pequeños arcos a lo largo de toda la circunferencia (2 * PI)
+    while (anguloActual < 2 * math.pi) {
+      canvas.drawArc(
+        Rect.fromCircle(center: center, radius: radius),
+        anguloActual,
+        anguloTrazo,
+        false,
+        paint,
+      );
+      anguloActual += anguloTrazo + anguloEspacio;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
