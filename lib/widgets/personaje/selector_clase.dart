@@ -86,37 +86,38 @@ class SelectorPersonaje extends StatelessWidget {
   final bool seleccionado;
   final VoidCallback onTap;
 
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () {
-        onTap();
-      },
+      onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 2.0),
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 4.0),
         decoration: BoxDecoration(
           color: ArenaColors.fondo,
           borderRadius: BorderRadius.circular(ArenaMedidas.radioBoton),
           border: Border.all(
             color: seleccionado ? ArenaColors.deClase(tipo) : ArenaColors.borde,
-            width: seleccionado ? ArenaMedidas.grosorBordeSeleccion : ArenaMedidas.grosorBorde,
-          )
+            width: seleccionado
+                ? ArenaMedidas.grosorBordeSeleccion
+                : ArenaMedidas.grosorBorde,
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            AvatarCirculo(tipo: tipo),
-            SizedBox(width: ArenaMedidas.s8),
-            Flexible(
-              child: Text(
+        child: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              AvatarCirculo(tipo: tipo),
+              const SizedBox(width: 6.0),
+              Text(
                 tipo,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-                style: ArenaTextos.etiqueta,
+                style: ArenaTextos.etiqueta.copyWith(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
