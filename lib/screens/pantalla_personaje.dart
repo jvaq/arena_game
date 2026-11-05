@@ -45,8 +45,15 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
   /// TODO(grupo I): si el arma ya está elegida, quitarla; si no y hay hueco
   /// (`_elegidas.length < _catalogo!.armasPorPersonaje`), añadirla.
   void _alternarArma(Arma arma) {
-    // setState(() { ... });
+    setState(() {
+      if (_elegidas.contains(arma)) {
+        _elegidas.remove(arma);
+      } else if (_elegidas.length < _catalogo!.armasPorPersonaje) {
+        _elegidas.add(arma);
+      }
+    });
   }
+
 
   /// TODO(grupo I): true solo cuando hay exactamente `armasPorPersonaje` armas elegidas.
   bool get _puedeGuardar => false;
