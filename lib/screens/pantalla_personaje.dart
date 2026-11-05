@@ -39,7 +39,7 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
 
   /// TODO(grupo I): al cambiar de clase se guarda la nueva y se VACÍA la selección de armas.
   void _cambiarClase(ClasePersonaje nueva) {
-    // setState(() { ... });
+     setState(() { _clase = nueva; });
   }
 
   /// TODO(grupo I): si el arma ya está elegida, quitarla; si no y hay hueco
