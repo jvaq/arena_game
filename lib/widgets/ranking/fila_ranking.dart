@@ -3,7 +3,6 @@ import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../../theme/arena_theme.dart';
 
 /// PIEZA A · Fila del ranking.
 ///

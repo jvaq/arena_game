@@ -3,7 +3,6 @@ import 'package:arena_game/widgets/ranking/fila_ranking.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
 
 /// PIEZA B · Tarjeta fija «Tu posición» (va abajo del todo en la pantalla).
 ///

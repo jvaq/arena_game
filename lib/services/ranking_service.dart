@@ -18,8 +18,6 @@ import '../models/models.dart';
 // }
 
 
-import '../models/models.dart';
-
 /// PIEZA D · Origen de los datos del ranking.
 ///
 /// Fase 1 (obligatoria): devolver los datos de ejemplo con `RankingEjemplo.cargar()`.
