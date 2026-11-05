@@ -29,16 +29,25 @@ class EscenaPersonaje extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start ,
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: .max,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [Row(
+        crossAxisAlignment: CrossAxisAlignment.center ,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          ArmaImagen(armaseleccionada: armas.first),
+          if (armas.isNotEmpty)ArmaImagen(armaseleccionada: armas.first),
           ImagenPersonaje(personaje: clase),
-          ArmaImagen(armaseleccionada: armas.last),
+          if (armas.length > 1)ArmaImagen(armaseleccionada: armas.last),
         ],
       ),
+        Image.asset(
+          ArenaAssets.plataforma,
+          width: 220,
+          fit: BoxFit.contain,
+
+        ),
+      ],
+    ),
     );
   }
 }
@@ -47,18 +56,30 @@ class ArmaImagen extends StatelessWidget {
   const ArmaImagen({super.key, required this.armaseleccionada});
 
   final Arma armaseleccionada;
-
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      ArenaAssets.arma("mago", armaseleccionada.id),
-      width: 80,
-      height: 80,
-      fit: BoxFit.contain,
+    return Container(
+      width: 75,
+      height: 75,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.black.withOpacity(0.3), // Fondo semitransparente opcional
+        border: Border.all(
+          color: Colors.blueAccent, // Color del borde circular
+          width: 3.0, // Grosor del círculo
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(12.0), // Espacio entre el arma y el borde del círculo
+        child: Image.asset(
+          ArenaAssets.arma("mago", armaseleccionada.id),
+          fit: BoxFit.contain,
+
+        ),
+      ),
     );
   }
 }
-
 class ImagenPersonaje extends StatelessWidget {
   const ImagenPersonaje({super.key, required this.personaje});
 
@@ -69,8 +90,11 @@ class ImagenPersonaje extends StatelessWidget {
     return Image.asset(
       ArenaAssets.personaje(personaje.id),
       width: 200,
-      height: 150,
+      height: 200,
+
       fit: BoxFit.contain,
     );
   }
 }
+
+
