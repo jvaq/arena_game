@@ -8,12 +8,12 @@ import '../../theme/arena_theme.dart';
 /// PIEZA A · Fila del ranking.
 ///
 /// Qué hay que dibujar (altura 52, ver README, sección «Pantalla 1»):
-///  - Posición: medalla `ArenaAssets.medalla(posicion)` si es 1-3; si no, el número.
-///  - Avatar circular (38 px) con borde del color de la clase (`ArenaColors.deClase`).
-///  - Nick (`ArenaTextos.cuerpo`) y `entrada.victoriasDerrotas` (`ArenaTextos.etiqueta`).
-///  - Puntos a la derecha (`ArenaTextos.puntos`).
-///  - Si `entrada.posicion == 1`: borde dorado.
-///  - Si `resaltada` es true: fondo `superficieAlta` (para tu fila dentro del top 10). //se hace con un if/else
+///  - Posición: medalla `ArenaAssets.medalla(posicion)` si es 1-3; si no, el número. hecho
+///  - Avatar circular (38 px) con borde del color de la clase (`ArenaColors.deClase`). hecho
+///  - Nick (`ArenaTextos.cuerpo`) y `entrada.victoriasDerrotas` (`ArenaTextos.etiqueta`).hecho
+///  - Puntos a la derecha (`ArenaTextos.puntos`). hecho
+///  - Si `entrada.posicion == 1`: borde dorado.hecho
+///  - Si `resaltada` es true: fondo `superficieAlta` (para tu fila dentro del top 10). //se hace con un if/else hecho en funcion privada se llama en boxdecoration color
 ///
 /// NO cambies el constructor: el resto de piezas dependen de él.
 class FilaRanking extends StatelessWidget {
@@ -25,20 +25,12 @@ class FilaRanking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medalla = ArenaAssets.medalla(entrada.posicion); //recibe clase de medalla
-    Color colorFondo;
-    if(resaltada){
-      colorFondo= ArenaColors.superficieAlta;
-    }else{
-      colorFondo= ArenaColors.superficie;
-    }
-
 
     return Container( //container.. que tiene como hijo un row y sus hijos con sus caracteristicas
       height: 52,
       padding: const EdgeInsets.symmetric(horizontal: ArenaMedidas.s8),
       decoration: BoxDecoration(
-        color:colorFondo,
-
+        color:_obtenerColorFondo(resaltada),
         borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
         border: Border.all(
           color: entrada.posicion == 1 ? ArenaColors.dorado : ArenaColors.borde,
@@ -46,6 +38,7 @@ class FilaRanking extends StatelessWidget {
         ),
       ),
       child: Row(children: [ //los hijos del chil que tiene:
+        //POSICION
         SizedBox(
           width: 36,
           //hijo medalla previamente medalla es un objeto que acepta null String?medalla
@@ -55,7 +48,7 @@ class FilaRanking extends StatelessWidget {
               : Text('${entrada.posicion}', textAlign: TextAlign.center, style: ArenaTextos.subtitulo),
         ),
         const SizedBox(width: ArenaMedidas.s8),
-        // avatar con borde de color de clase ...
+        // AVATAR
         // Avatar circular con borde del color de la clase
         Container(
           decoration: BoxDecoration(
@@ -69,6 +62,7 @@ class FilaRanking extends StatelessWidget {
             child: Image.asset(ArenaAssets.avatar(entrada.clase), width: 38, height: 38, fit: BoxFit.cover),
           ),
         ),
+        const SizedBox(width: ArenaMedidas.s8),
         Expanded(
           //penultimo hijo tiene una columna con dos texto
           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -83,6 +77,16 @@ class FilaRanking extends StatelessWidget {
     );
   }
 }
+// Uso una función en vez de un ternario para facilitar la ampliación a más colores.
+// Si hubiera más de dos estados, cambiaría el bool por un enum y usaría if/else if o switch.
+Color _obtenerColorFondo(bool resaltada){
+  if(resaltada){
+    return ArenaColors.superficieAlta;
+  }else{
+    return ArenaColors.superficie;
+  }
+}
+
 
 
 

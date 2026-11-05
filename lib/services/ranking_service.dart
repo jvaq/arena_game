@@ -12,7 +12,7 @@ class RankingService {
   const RankingService();
 
   Future<RankingEjemplo> cargarRanking() async {
-    // TODO(grupo D): fase 1 → return RankingEjemplo.cargar();
+    return RankingEjemplo.cargar();
     throw UnimplementedError('RankingService.cargarRanking sin implementar');
   }
 }
