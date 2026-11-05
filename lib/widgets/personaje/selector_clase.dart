@@ -59,7 +59,7 @@ class ImagenAvatar extends StatelessWidget {
   const ImagenAvatar({super.key, required this.personaje});
 
   final String personaje;
-//ñe
+//ñeño
   @override
   Widget build(BuildContext context) {
     return Image.asset(
