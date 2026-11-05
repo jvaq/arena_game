@@ -67,14 +67,17 @@ class RejillaArmas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final bool maxAlcanzado = elegidas.length >= maxArmas;
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("ARMAS", style: ArenaTextos.subtitulo),
             Text(
-              "${elegidas.length} / 2 elegidas",
+              "${elegidas.length} / $maxArmas elegidas",
               style: ArenaTextos.cuerpoSuave.copyWith(
                 color: ArenaColors.dorado,
                 fontWeight: FontWeight.w600,
@@ -85,30 +88,27 @@ class RejillaArmas extends StatelessWidget {
         const SizedBox(height: ArenaMedidas.s8),
         GridView.count(
           crossAxisCount: 2,
-          childAspectRatio: 2.0,
+          childAspectRatio: 2.2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
           shrinkWrap: true,
-          // Evita el error de altura infinita
           physics: const NeverScrollableScrollPhysics(),
-          // Evita conflictos de scroll
           children: [
             for (var arma in armas)
               Stack(
-                clipBehavior: Clip.none,   //para q no recorte el borde del circulo y salga x fuera del boton,
+                clipBehavior: Clip.none, // Permite que el círculo sobresalga
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, top: 8),
-                    child: OutlinedButton.icon(
-                      
+                  Opacity(
+                    opacity: (maxAlcanzado && !elegidas.contains(arma)) ? 0.4 : 1.0,
+                    child: OutlinedButton(
                       onPressed: () => onAlternar(arma),
                       style: OutlinedButton.styleFrom(
-                        padding: EdgeInsets.all(4),
+                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
                         backgroundColor: elegidas.contains(arma)
                             ? ArenaColors.superficieAlta
                             : ArenaColors.superficie,
                         side: BorderSide(
-                          color: elegidas.contains(arma)
-                              ? ArenaColors.dorado
-                              : ArenaColors.borde,
+                          color: elegidas.contains(arma) ? ArenaColors.dorado : ArenaColors.borde,
                           width: elegidas.contains(arma)
                               ? ArenaMedidas.grosorBordeSeleccion
                               : ArenaMedidas.grosorBorde,
@@ -119,45 +119,53 @@ class RejillaArmas extends StatelessWidget {
                           ),
                         ),
                       ),
-                      icon: SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: Image.asset(arma.imagen),
-                      ),
-                      label: Expanded(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              arma.nombre,
-                              style: ArenaTextos.cuerpo.copyWith(fontSize: 14),
-                              maxLines: 2,
-                              overflow: TextOverflow.visible,
+                      child: Row(
+                        children: [
+                          SizedBox(
+                            width: 42,
+                            height: 42,
+                            child: Image.asset(arma.imagen, fit: BoxFit.contain),
+                          ),
+                          const SizedBox(width: 6),
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  arma.nombre,
+                                  style: ArenaTextos.cuerpo.copyWith(fontSize: 14),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  _formatearAtaque(arma),
+                                  style: ArenaTextos.cuerpoSuave.copyWith(
+                                    fontSize: 11,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
                             ),
-                            Text(
-                              _formatearAtaque(arma),
-                              style: ArenaTextos.cuerpoSuave.copyWith(
-                                fontSize: 11,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.visible,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ),
                   if (elegidas.contains(arma))
                     Positioned(
-                      right: -5,
+                      top: -4,
+                      right: -4,
                       child: Container(
+                        padding: const EdgeInsets.all(2),
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: ArenaColors.dorado,
                         ),
                         child: Icon(
                           Icons.check,
+                          size: 18,
                           color: ArenaColors.textoSobreDorado,
                         ),
                       ),
