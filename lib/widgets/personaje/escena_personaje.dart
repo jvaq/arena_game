@@ -1,7 +1,7 @@
+import 'package:arena_game/theme/arena_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
 
 /// PIEZA E · Zona superior de la pantalla de personaje (altura aprox. 300).
 ///
@@ -20,7 +20,56 @@ class EscenaPersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO(grupo E)
-    return PiezaPendiente('EscenaPersonaje · ${clase.nombre} (${armas.length} armas)', alto: 300);
+    return Container(
+      height: 300,
+      width: double.infinity,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(ArenaAssets.fondo),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          if (armas.isNotEmpty) ArmaImagen(armaseleccionada: armas.first),
+          Expanded(child:ImagenPersonaje(personaje: clase),),
+
+          if (armas.length > 1) ArmaImagen(armaseleccionada: armas.last),
+        ],
+      ),
+    );
+  }
+}
+
+class ArmaImagen extends StatelessWidget {
+  const ArmaImagen({super.key, required this.armaseleccionada});
+
+  final Arma armaseleccionada;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      ArenaAssets.arma(armaseleccionada.nombre, armaseleccionada.id),
+      width: 65,
+      height: 65,
+      fit: BoxFit.contain,
+    );
+  }
+}
+
+class ImagenPersonaje extends StatelessWidget {
+  const ImagenPersonaje({super.key, required this.personaje});
+
+  final ClasePersonaje personaje;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      ArenaAssets.personaje(personaje.nombre),
+      width: 180,
+      height: 220,
+      fit: BoxFit.contain,
+    );
   }
 }
