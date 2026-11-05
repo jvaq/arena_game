@@ -111,6 +111,7 @@ class SelectorPersonaje extends StatelessWidget {
             Text(
               tipo,
               style: ArenaTextos.etiqueta,
+              overflow: TextOverflow.ellipsis,
             ),
           ],
         ),
