@@ -85,9 +85,7 @@ class RejillaArmas extends StatelessWidget {
         const SizedBox(height: ArenaMedidas.s8),
         GridView.count(
           crossAxisCount: 2,
-          mainAxisSpacing: ArenaMedidas.s8,
-          crossAxisSpacing: ArenaMedidas.s8,
-          childAspectRatio: 2.2,
+          childAspectRatio: 2.0,
           shrinkWrap: true,
           // Evita el error de altura infinita
           physics: const NeverScrollableScrollPhysics(),
@@ -97,58 +95,62 @@ class RejillaArmas extends StatelessWidget {
               Stack(
                 clipBehavior: Clip.none,   //para q no recorte el borde del circulo y salga x fuera del boton,
                 children: [
-                  OutlinedButton.icon(
-                    onPressed: () => onAlternar(arma),
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: elegidas.contains(arma)
-                          ? ArenaColors.superficieAlta
-                          : ArenaColors.superficie,
-                      side: BorderSide(
-                        color: elegidas.contains(arma)
-                            ? ArenaColors.dorado
-                            : ArenaColors.borde,
-                        width: elegidas.contains(arma)
-                            ? ArenaMedidas.grosorBordeSeleccion
-                            : ArenaMedidas.grosorBorde,
-                      ),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                          ArenaMedidas.radioTarjeta,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, top: 8),
+                    child: OutlinedButton.icon(
+                      
+                      onPressed: () => onAlternar(arma),
+                      style: OutlinedButton.styleFrom(
+                        padding: EdgeInsets.all(4),
+                        backgroundColor: elegidas.contains(arma)
+                            ? ArenaColors.superficieAlta
+                            : ArenaColors.superficie,
+                        side: BorderSide(
+                          color: elegidas.contains(arma)
+                              ? ArenaColors.dorado
+                              : ArenaColors.borde,
+                          width: elegidas.contains(arma)
+                              ? ArenaMedidas.grosorBordeSeleccion
+                              : ArenaMedidas.grosorBorde,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(
+                            ArenaMedidas.radioTarjeta,
+                          ),
                         ),
                       ),
-                    ),
-                    icon: SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: Image.asset(arma.imagen),
-                    ),
-                    label: Expanded(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            arma.nombre,
-                            style: ArenaTextos.cuerpo.copyWith(fontSize: 14),
-                            maxLines: 2,
-                            overflow: TextOverflow.visible,
-                          ),
-                          Text(
-                            _formatearAtaque(arma),
-                            style: ArenaTextos.cuerpoSuave.copyWith(
-                              fontSize: 11,
+                      icon: SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: Image.asset(arma.imagen),
+                      ),
+                      label: Expanded(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              arma.nombre,
+                              style: ArenaTextos.cuerpo.copyWith(fontSize: 14),
+                              maxLines: 2,
+                              overflow: TextOverflow.visible,
                             ),
-                            maxLines: 2,
-                            overflow: TextOverflow.visible,
-                          ),
-                        ],
+                            Text(
+                              _formatearAtaque(arma),
+                              style: ArenaTextos.cuerpoSuave.copyWith(
+                                fontSize: 11,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.visible,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                   if (elegidas.contains(arma))
                     Positioned(
-                      top: -5,
-                      right: -5, //valor negativo para que saga fuera del boton,)
+                      right: -5,
                       child: Container(
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
