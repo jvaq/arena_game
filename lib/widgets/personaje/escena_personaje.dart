@@ -1,6 +1,6 @@
-import 'dart:math' as math;
 import 'package:arena_game/theme/arena_assets.dart';
 import 'package:arena_game/theme/arena_theme.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
@@ -35,9 +35,6 @@ class EscenaPersonaje extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
-
-
           // 2. FILA CENTRAL: Arma 1 | Personaje + Plataforma | Arma 2
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -114,27 +111,22 @@ class _CirculoArma extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool tieneArma = imagen != null;
 
-    return CustomPaint(
-      foregroundPainter: tieneArma
-          ? null
-          : _BordeDiscontinuoPainter(
-        color: Colors.white24,
-        grosor: 2,
+    return DottedBorder(
+      options: RoundedRectDottedBorderOptions(
+        dashPattern: tieneArma ? const [1, 0] : const [10, 5],
+        strokeWidth: 2,
+        radius: Radius.circular(58),
+        color: tieneArma ? colorBorde : Colors.white24,
+        padding: EdgeInsets.zero,
       ),
       child: Container(
         width: 82,
         height: 82,
-        padding: const EdgeInsets.all(ArenaMedidas.s8),
+        padding: tieneArma ? const EdgeInsets.all(10) : EdgeInsets.zero,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: ArenaColors.fondo,
-          border: tieneArma
-              ? Border.all(
-            color: colorBorde,
-            width: ArenaMedidas.grosorBordeSeleccion,
-          )
-              : null,
         ),
         child: tieneArma
             ? Image.asset(
@@ -151,40 +143,4 @@ class _CirculoArma extends StatelessWidget {
       ),
     );
   }
-}
-
-class _BordeDiscontinuoPainter extends CustomPainter {
-  const _BordeDiscontinuoPainter({
-    required this.color,
-    required this.grosor,
-  });
-
-  final Color color;
-  final double grosor;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = color
-      ..strokeWidth = grosor
-      ..style = PaintingStyle.stroke;
-
-    final double radio = (size.width / 2) - (grosor / 2);
-    final Offset centro = Offset(size.width / 2, size.height / 2);
-    const int cantidadGuiones = 28;
-    const double paso = (2 * math.pi) / cantidadGuiones;
-
-    for (int i = 0; i < cantidadGuiones; i++) {
-      canvas.drawArc(
-        Rect.fromCircle(center: centro, radius: radio),
-        i * paso,
-        paso * 0.55,
-        false,
-        paint,
-      );
-    }
-  }
-
-  @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
