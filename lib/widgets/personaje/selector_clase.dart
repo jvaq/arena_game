@@ -31,19 +31,45 @@ class SelectorClase extends StatelessWidget {
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(ArenaMedidas.s8),
-            child: SelectorPersonaje(tipo: "caballero"),
+            child: SelectorPersonaje(
+              tipo: "caballero",
+              seleccionado: elegida.nombre.toLowerCase() == "caballero",
+              onTap: () => onCambiar(
+                clases.firstWhere(
+                      (c) => c.nombre.toLowerCase() == "caballero",
+                  orElse: () => clases[0],
+                ),
+              ),
+            ),
           ),
         ),
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(ArenaMedidas.s8),
-            child: SelectorPersonaje(tipo: "orco"),
+            child: SelectorPersonaje(tipo: "orco",
+              seleccionado: elegida.nombre.toLowerCase() == "orco",
+              onTap: () => onCambiar(
+                clases.firstWhere(
+                      (c) => c.nombre.toLowerCase() == "orco",
+                  orElse: () => clases[1],
+                ),
+              ),
+            ),
           ),
         ),
         Expanded(
           child: Padding(
             padding: EdgeInsets.all(ArenaMedidas.s8),
-            child: SelectorPersonaje(tipo: "mago"),
+            child: SelectorPersonaje(
+              tipo: "mago",
+              seleccionado: elegida.nombre.toLowerCase() == "mago",
+              onTap: () => onCambiar(
+                clases.firstWhere(
+                      (c) => c.nombre.toLowerCase() == "mago",
+                  orElse: () => clases[2],
+                ),
+              ),
+            ),
           ),
         ),
       ],
@@ -52,22 +78,42 @@ class SelectorClase extends StatelessWidget {
 }
 
 class SelectorPersonaje extends StatelessWidget {
-  SelectorPersonaje({super.key, required this.tipo});
+  SelectorPersonaje({
+    super.key, required this.tipo, required this.seleccionado, required this.onTap
+  });
 
-  String tipo;
+  final String tipo;
+  final bool seleccionado;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: ArenaColors.fondo,
-        borderRadius: BorderRadius.circular(ArenaMedidas.radioBoton),
-      ),
-      child: Row(
-        children: [
-          AvatarCirculo(tipo: tipo),
-          Text(tipo),
-        ],
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        onTap();
+      },
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 4.0),
+        decoration: BoxDecoration(
+          color: ArenaColors.fondo,
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioBoton),
+          border: Border.all(
+            color: seleccionado ? ArenaColors.deClase(tipo) : ArenaColors.borde,
+            width: seleccionado ? ArenaMedidas.grosorBordeSeleccion : ArenaMedidas.grosorBorde,
+          )
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            AvatarCirculo(tipo: tipo),
+            SizedBox(width: ArenaMedidas.s8),
+            Text(
+              tipo,
+              style: ArenaTextos.etiqueta,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -76,12 +122,12 @@ class SelectorPersonaje extends StatelessWidget {
 class AvatarCirculo extends StatelessWidget {
   AvatarCirculo({super.key, required this.tipo});
 
-  String tipo;
+  final String tipo;
 
   @override
   Widget build(BuildContext context) {
     return CircleAvatar(
-      radius: 20,
+      radius: ArenaMedidas.s16,
       backgroundColor: ArenaColors.fondo,
       child: Image.asset(
           ArenaAssets.avatar(tipo),
