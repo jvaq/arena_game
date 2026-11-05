@@ -45,7 +45,7 @@ class BarrasStats extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             SizedBox(
-              width: 80,
+              width: 88,
               child: Text(
                 'Vida',
                 style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
@@ -84,7 +84,7 @@ class BarrasStats extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             SizedBox(
-              width: 80,
+              width: 88,
               child: Text(
                 'Ataque',
                 style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
@@ -123,7 +123,7 @@ class BarrasStats extends StatelessWidget {
             ),
             const SizedBox(width: 8),
             SizedBox(
-              width: 80,
+              width: 88,
               child: Text(
                 'Velocidad',
                 style: ArenaTextos.etiqueta.copyWith(fontSize: 16),
