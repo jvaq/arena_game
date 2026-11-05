@@ -21,6 +21,6 @@ class EscenaPersonaje extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo E)
-    return PiezaPendiente('EscenaPersonaje · ${clase.nombre} (${armas.length} armas)', alto: 300);
+    return Text("Hola");
   }
 }
