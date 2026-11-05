@@ -30,12 +30,13 @@ class EscenaPersonaje extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.start ,
+        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisSize: .max,
         children: [
-          if (armas.isNotEmpty) ArmaImagen(armaseleccionada: armas.first),
-          Expanded(child:ImagenPersonaje(personaje: clase),),
-
-          if (armas.length > 1) ArmaImagen(armaseleccionada: armas.last),
+          ArmaImagen(armaseleccionada: armas.first),
+          ImagenPersonaje(personaje: clase),
+          ArmaImagen(armaseleccionada: armas.last),
         ],
       ),
     );
@@ -50,9 +51,9 @@ class ArmaImagen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      ArenaAssets.arma(armaseleccionada.nombre, armaseleccionada.id),
-      width: 65,
-      height: 65,
+      ArenaAssets.arma("mago", armaseleccionada.id),
+      width: 80,
+      height: 80,
       fit: BoxFit.contain,
     );
   }
@@ -66,9 +67,9 @@ class ImagenPersonaje extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.asset(
-      ArenaAssets.personaje(personaje.nombre),
-      width: 180,
-      height: 220,
+      ArenaAssets.personaje(personaje.id),
+      width: 200,
+      height: 150,
       fit: BoxFit.contain,
     );
   }
