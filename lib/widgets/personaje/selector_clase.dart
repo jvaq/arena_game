@@ -94,7 +94,7 @@ class SelectorPersonaje extends StatelessWidget {
         onTap();
       },
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 4.0),
+        padding: EdgeInsets.symmetric(vertical: 14.0, horizontal: 2.0),
         decoration: BoxDecoration(
           color: ArenaColors.fondo,
           borderRadius: BorderRadius.circular(ArenaMedidas.radioBoton),
@@ -108,10 +108,13 @@ class SelectorPersonaje extends StatelessWidget {
           children: [
             AvatarCirculo(tipo: tipo),
             SizedBox(width: ArenaMedidas.s8),
-            Text(
-              tipo,
-              style: ArenaTextos.etiqueta,
-              overflow: TextOverflow.ellipsis,
+            Flexible(
+              child: Text(
+                tipo,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+                style: ArenaTextos.etiqueta,
+              ),
             ),
           ],
         ),
