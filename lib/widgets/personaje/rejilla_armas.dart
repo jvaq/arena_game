@@ -88,7 +88,7 @@ class RejillaArmas extends StatelessWidget {
         const SizedBox(height: ArenaMedidas.s8),
         GridView.count(
           crossAxisCount: 2,
-          childAspectRatio: 2.2,
+          childAspectRatio: 2.0,
           crossAxisSpacing: 8,
           mainAxisSpacing: 8,
           shrinkWrap: true,
