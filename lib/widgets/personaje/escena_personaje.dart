@@ -39,7 +39,7 @@ class EscenaPersonaje extends StatelessWidget {
             right: 0,
             child: const Center(
               child: Text(
-                'ELEGÍ TU PERSONAJE ',
+                'ELIGE TU PERSONAJE ',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
