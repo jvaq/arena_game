@@ -1,8 +1,8 @@
+import 'package:arena_game/theme/arena_theme.dart';
 import 'package:arena_game/widgets/ranking/fila_ranking.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
 
 /// PIEZA B · Tarjeta fija «Tu posición» (va abajo del todo en la pantalla).
 ///
@@ -21,6 +21,11 @@ class TarjetaTuPosicion extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo B): sustituye este placeholder por la tarjeta real.
-    return FilaRanking(entrada: this.entrada,resaltada:  true,);
+    return Column(
+      children: [
+        Text("TU POSICIÓN",style: ArenaTextos.etiqueta,),
+        FilaRanking(entrada: this.entrada,resaltada:  true,),
+      ],
+    );
   }
 }

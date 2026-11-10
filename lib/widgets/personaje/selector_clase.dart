@@ -1,9 +1,9 @@
-import 'package:arena_game/theme/arena_assets.dart';
-import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
 import '../pieza_pendiente.dart';
+import '../../theme/arena_assets.dart';
+import '../../theme/arena_theme.dart';
 
 /// PIEZA F · Selector de clase: 3 tarjetas en fila (avatar + nombre).
 ///
