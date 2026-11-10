@@ -39,21 +39,48 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
 
   /// TODO(grupo I): al cambiar de clase se guarda la nueva y se VACÍA la selección de armas.
   void _cambiarClase(ClasePersonaje nueva) {
-    // setState(() { ... });
+    setState(() {
+      _clase = nueva;
+      _elegidas.clear();
+    });
   }
 
   /// TODO(grupo I): si el arma ya está elegida, quitarla; si no y hay hueco
   /// (`_elegidas.length < _catalogo!.armasPorPersonaje`), añadirla.
+
   void _alternarArma(Arma arma) {
-    // setState(() { ... });
+    setState(() {
+      // Comprueba si el arma ya está seleccionada.
+      final seleccionada = _elegidas.any(
+            (elemento) => elemento.id == arma.id,
+      );
+
+      if (seleccionada) {
+        // Si ya estaba seleccionada, la quitamos.
+        _elegidas.removeWhere(
+              (elemento) => elemento.id == arma.id,
+        );
+      } else {
+        // Si hay espacio, añadimos el arma.
+        if (_elegidas.length < _catalogo!.armasPorPersonaje) {
+          _elegidas.add(arma);
+        }
+      }
+    });
   }
 
+
   /// TODO(grupo I): true solo cuando hay exactamente `armasPorPersonaje` armas elegidas.
-  bool get _puedeGuardar => false;
+  bool get _puedeGuardar =>
+      _catalogo != null && _elegidas.length == _catalogo!.armasPorPersonaje;
 
   /// TODO(grupo I): al pulsar «Guardar». Fase 1: SnackBar con «Personaje guardado».
   /// Fase 2 (opcional): PUT /jugadores/{id}/personaje con la API.
-  void _guardar() {}
+  void _guardar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Personaje guardado')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +101,7 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
           children: [
             EscenaPersonaje(clase: clase, armas: _elegidas),
             const SizedBox(height: ArenaMedidas.s16),
+            // Aquí le pasamos tu _cambiarClase al SelectorClase que acabas de hacer
             SelectorClase(clases: catalogo.clases, elegida: clase, onCambiar: _cambiarClase),
             const SizedBox(height: ArenaMedidas.s16),
             BarrasStats(stats: stats, maxPuntosBarra: catalogo.maxPuntosBarra, color: clase.color),
