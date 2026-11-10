@@ -1,3 +1,4 @@
+import 'package:arena_game/theme/arena_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../models/models.dart';
@@ -31,7 +32,11 @@ class _PantallaRankingState extends State<PantallaRanking> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Ranking')),
+      appBar: AppBar(title: Row( mainAxisAlignment: MainAxisAlignment.center,
+        children: [ Image.asset(ArenaAssets.trofeo,height: 30),
+          const Text('Ranking'),
+        ],
+      )),
       body: FutureBuilder<RankingEjemplo>(
         future: _futuro,
         builder: (context, snap) {
@@ -57,9 +62,11 @@ class _PantallaRankingState extends State<PantallaRanking> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(ArenaMedidas.s16),
-                child: TarjetaTuPosicion(entrada: ranking.tu),
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(ArenaMedidas.s16),
+                  child: TarjetaTuPosicion(entrada: ranking.tu),
+                ),
               ),
             ],
           );
