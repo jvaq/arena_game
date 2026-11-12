@@ -1,3 +1,4 @@
+import 'package:arena_game/theme/arena_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/arena_config.dart';
@@ -48,6 +49,12 @@ class _PantallaSplashState extends State<PantallaSplash> {
     //       «Comprobando sesión…» con ArenaTextos.cuerpoSuave
     //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
     //   - Añade errorBuilder a las Image.asset por si falta una imagen.
+    /*Stack(
+      fit: StackFit.expand,
+      children: [
+        Image.asset(ArenaAssets.fondo, fit: BoxFit.cover, errorBuilder: ,)
+      ],
+    );*/
     return Scaffold(
       body: Container()
     );
