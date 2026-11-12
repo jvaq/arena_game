@@ -14,7 +14,7 @@ class PantallaRegistroJugador extends StatefulWidget {
 }
 
 class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
-  // TODO 1: crea la GlobalKey<FormState> del formulario (ver ejercicios de formularios).
+  final _clave=GlobalKey<FormState>();
   bool _cargando = false;
 
   @override
@@ -71,9 +71,13 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(ArenaMedidas.s24),
-          child: Column(
-            children: [
-            ],
+          child: Form(
+            key:_clave,
+            child:Column(
+              children: [
+
+              ],
+            ),
           ),
         ),
       ),
