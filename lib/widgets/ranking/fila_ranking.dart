@@ -1,5 +1,6 @@
 import 'package:arena_game/theme/arena_assets.dart';
 import 'package:arena_game/theme/arena_theme.dart';
+import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
@@ -26,17 +27,58 @@ class FilaRanking extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO(grupo A): sustituye este placeholder por la fila real.
 
-    return Container(child: Row(children: [
-      Padding(
-        padding: EdgeInsets.all(ArenaMedidas.s8),
-        child: RankingNumber(rankingNumber: 1),
+    return Container(
+      height: 64,
+      decoration: BoxDecoration(
+        color: ArenaColors.superficieAlta,
+        border: Border.all(color: ArenaColors.dorado, width: 2.5),
+        borderRadius: BorderRadius.circular(20),
       ),
-      AvatarCirculo(clasePersonaje: "orco"),
-      NombrePersonaje(nombre: "Aria"),
-      PartidasJugadas(partidasGanadas: 21, partidasPerdidas: 3),
-      PuntosPersonajes(puntos: 340)
-
-    ]));
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Padding(
+                padding: EdgeInsets.all(ArenaMedidas.s4),
+                child: RankingNumber(rankingNumber: 1),
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.all(ArenaMedidas.s8),
+            child: AvatarCirculo(clasePersonaje: "mago"),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                NombrePersonaje(nombre: "Aria"),
+                PartidasJugadas(partidasGanadas: 21, partidasPerdidas: 3),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(ArenaMedidas.s16),
+                    child: PuntosPersonajes(puntos: 340),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -62,10 +104,14 @@ class AvatarCirculo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      ArenaAssets.avatar(clasePersonaje),
-      height: ArenaMedidas.s32,
-      width: ArenaMedidas.s32,
+    return DottedBorder(
+      options: CircularDottedBorderOptions(
+        dashPattern: [10, 0],
+        strokeWidth: 2,
+        color: ArenaColors.mago,
+        padding: EdgeInsets.all(6),
+      ),
+      child: Image.asset(ArenaAssets.avatar(clasePersonaje)),
     );
   }
 }
@@ -77,13 +123,19 @@ class NombrePersonaje extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(ArenaAssets.personaje(nombre)
+    return Text(
+      (nombre),
+      style: TextStyle(color: ArenaColors.texto, fontWeight: FontWeight.bold),
     );
   }
 }
 
 class PartidasJugadas extends StatelessWidget {
-  const PartidasJugadas({super.key, required this.partidasGanadas, required this.partidasPerdidas});
+  const PartidasJugadas({
+    super.key,
+    required this.partidasGanadas,
+    required this.partidasPerdidas,
+  });
 
   final int partidasGanadas;
   final int partidasPerdidas;
@@ -97,10 +149,19 @@ class PartidasJugadas extends StatelessWidget {
 class PuntosPersonajes extends StatelessWidget {
   const PuntosPersonajes({super.key, required this.puntos});
 
-final int puntos;
+  final int puntos;
+
   @override
   Widget build(BuildContext context) {
-    return Text("$puntos");
+    return Center(
+      child: Text(
+        ("$puntos"),
+        style: TextStyle(
+          color: ArenaColors.dorado,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
   }
 }
 
