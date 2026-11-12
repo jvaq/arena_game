@@ -1,6 +1,8 @@
+import 'package:arena_game/theme/arena_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
+import '../../theme/arena_theme.dart';
 import '../pieza_pendiente.dart';
 
 /// PIEZA F · Selector de clase: 3 tarjetas en fila (avatar + nombre).
@@ -18,13 +20,52 @@ class SelectorClase extends StatelessWidget {
     required this.onCambiar,
   });
 
-  final List<ClasePersonaje> clases;
+  final List<ClasePersonaje> clases ;
   final ClasePersonaje elegida;
   final ValueChanged<ClasePersonaje> onCambiar;
 
   @override
   Widget build(BuildContext context) {
     // TODO(grupo F)
-    return PiezaPendiente('SelectorClase · elegida: ${elegida.nombre}', alto: 96);
+    return Row(
+      children: [
+        SelectorPersonaje(personaje: clases.first.nombre),
+        SelectorPersonaje(personaje: clases[1].nombre),
+        SelectorPersonaje(personaje: clases[2].nombre),
+      ],
+    );
+  }
+}
+
+class SelectorPersonaje extends StatelessWidget {
+  const SelectorPersonaje({super.key, required this.personaje});
+
+  final String personaje;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Row(
+        children: [
+          ImagenAvatar(personaje: personaje),
+          Text(personaje),
+        ],
+      ),
+    );
+  }
+}
+
+class ImagenAvatar extends StatelessWidget {
+  const ImagenAvatar({super.key, required this.personaje});
+
+  final String personaje;
+
+  @override
+  Widget build(BuildContext context) {
+    return Image.asset(
+      ArenaAssets.avatar(personaje),
+      width: ArenaMedidas.s32,
+      height: ArenaMedidas.s32,
+    );
   }
 }
