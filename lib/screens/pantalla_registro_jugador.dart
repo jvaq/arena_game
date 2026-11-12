@@ -1,3 +1,4 @@
+import 'package:arena_game/widgets/cabecera_formulario.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/api_service.dart';
@@ -15,11 +16,14 @@ class PantallaRegistroJugador extends StatefulWidget {
 
 class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   // TODO 1: crea la GlobalKey<FormState> del formulario (ver ejercicios de formularios).
+  final _formKey= GlobalKey<FormState>(); //permite acceder al estado del formulario y comprobar si los campos son validos
+  final _nickCtrl = TextEditingController(); //crea el controlador para obtener el nick introducido por el jugador.
   bool _cargando = false;
 
   @override
   void dispose() {
     super.dispose();
+    _nickCtrl.dispose();//libera recursos es opcional
   }
 
   /// YA HECHO: manda el nick al servidor y guarda la sesión.
@@ -71,9 +75,11 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(ArenaMedidas.s24),
-          child: Column(
-            children: [
-            ],
+          child: Form( key:_formKey,//permitirá validar todos los campos registrados
+            child: Column(
+              children: [CabeceraFormulario(titulo: 'Únete a la Arena', subtitulo: 'Elige un nick:así te verán en el ranking.')
+              ],
+            ),
           ),
         ),
       ),
