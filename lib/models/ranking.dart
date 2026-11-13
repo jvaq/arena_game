@@ -48,7 +48,6 @@ class EntradaRanking {
         'victorias': victorias,
         'derrotas': derrotas,
       };
-
   /// Texto "21 V · 3 D" de la segunda línea de cada fila.
   String get victoriasDerrotas => '$victorias V · $derrotas D';
 }

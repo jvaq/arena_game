@@ -48,7 +48,6 @@ class _PantallaRankingState extends State<PantallaRanking> {
           }
           final ranking = snap.data!;
           if (ranking.top.isEmpty) return const RankingVacio();
-
           return Column(
             children: [
               Expanded(

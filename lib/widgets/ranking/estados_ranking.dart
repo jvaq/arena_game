@@ -15,7 +15,6 @@ class RankingCargando extends StatelessWidget {
     return const PiezaPendiente('RankingCargando');
   }
 }
-
 /// Error: icono o imagen, mensaje (`mensaje`) y botón «Reintentar» que llama a `onReintentar`.
 class RankingError extends StatelessWidget {
   const RankingError({super.key, required this.mensaje, required this.onReintentar});

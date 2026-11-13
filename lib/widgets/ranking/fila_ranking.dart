@@ -25,7 +25,6 @@ class FilaRanking extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final medalla = ArenaAssets.medalla(entrada.posicion); //recibe clase de medalla
-
     return Container( //container.. que tiene como hijo un row y sus hijos con sus caracteristicas
       height: 52,
       padding: const EdgeInsets.symmetric(horizontal: ArenaMedidas.s8),
