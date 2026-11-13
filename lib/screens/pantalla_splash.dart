@@ -1,7 +1,10 @@
+import 'package:arena_game/app/routes.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/arena_config.dart';
 import '../../services/sesion_service.dart';
+import '../theme/arena_assets.dart';
+import '../theme/arena_theme.dart';
 
 /// EJERCICIO 1 · Splash: DISEÑO + NAVEGACIÓN.
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Splash».
@@ -32,24 +35,83 @@ class _PantallaSplashState extends State<PantallaSplash> {
     // (pushReplacement: así el botón «atrás» no vuelve al Splash).
     // ignore: unnecessary_null_comparison
     if (sesion == null) {
-
+      Navigator.pushReplacementNamed(context, Routes.registro);
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.inicio);
     }
   }
 
   @override
   Widget build(BuildContext context) {
     // TODO 2 (diseño): construye la pantalla de arranque:
-    //   - Fondo a pantalla completa: Stack(fit: StackFit.expand) con
-    //     Image.asset(ArenaAssets.fondo, fit: BoxFit.cover).
-    //   - Centrado, en una Column (mainAxisSize: min):
-    //       emblema (ArenaAssets.emblema, alto 160)
-    //       «ARENA» con ArenaTextos.titulo en color ArenaColors.dorado
-    //       CircularProgressIndicator dorado
-    //       «Comprobando sesión…» con ArenaTextos.cuerpoSuave
-    //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
-    //   - Añade errorBuilder a las Image.asset por si falta una imagen.
     return Scaffold(
-      body: Container()
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // 1. Fondo a pantalla completa con errorBuilder
+          Image.asset(
+            ArenaAssets.fondo,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return const ColoredBox(color: Colors.black);
+            },
+          ),
+
+          // 2. Capa oscura (opcional) al 55 % compatible con todas las versiones
+          const ColoredBox(
+            color: Color.fromRGBO(0, 0, 0, 0.55),
+          ),
+
+          // 3. Contenido centrado en una Column (mainAxisSize: min)
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Emblema con alto 160 y errorBuilder
+                Image.asset(
+                  ArenaAssets.emblema,
+                  height: 160,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const SizedBox(
+                      height: 160,
+                      child: Icon(
+                        Icons.shield,
+                        size: 100,
+                        color: Colors.amber,
+                      ),
+                    );
+                  },
+                ),
+
+                SizedBox(height: ArenaMedidas.s16),
+
+                // Texto «ARENA» con ArenaTextos.titulo en color ArenaColors.dorado
+                Text(
+                  'ARENA',
+                  style: ArenaTextos.titulo.copyWith(
+                    color: ArenaColors.dorado,
+                  ),
+                ),
+
+                SizedBox(height: ArenaMedidas.s32),
+
+                // CircularProgressIndicator dorado
+                CircularProgressIndicator(
+                  color: ArenaColors.dorado,
+                ),
+
+                SizedBox(height: ArenaMedidas.s16),
+
+                // Texto «Comprobando sesión…» con ArenaTextos.cuerpoSuave
+                Text(
+                  'Comprobando sesión…',
+                  style: ArenaTextos.cuerpoSuave,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
