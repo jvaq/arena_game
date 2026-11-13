@@ -11,13 +11,15 @@ class PantallaRegistroJugador extends StatefulWidget {
   const PantallaRegistroJugador({super.key});
 
   @override
-  State<PantallaRegistroJugador> createState() => _PantallaRegistroJugadorState();
+  State<PantallaRegistroJugador> createState() =>
+      _PantallaRegistroJugadorState();
 }
 
 class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   // TODO 1: crea la GlobalKey<FormState> del formulario (ver ejercicios de formularios).
   final _clave = GlobalKey<FormState>();
   bool _cargando = false;
+  bool _activo = false;
 
   @override
   void dispose() {
@@ -68,35 +70,49 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
     //     - botón «Entrar a la Arena» (ancho completo); desactivado y con
     //         CircularProgressIndicator pequeño mientras _cargando
     //     - TextButton.icon «Ajustes del servidor» → Navigator.pushNamed(context, Rutas.ajustes)
+
     return Scaffold(
       appBar: AppBar(title: const Text('Registro')),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(ArenaMedidas.s24),
-          child:
-            Form(
-              key: _clave,
-              child: Column(
-                children: [
-                  CabeceraFormulario(),
-                  const SizedBox(height: ArenaMedidas.s32,),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Nick',
-                      helperText: '3 a 16 caracteres: letras, números y ...',
-                        helperStyle: ArenaTextos.cuerpoSuave,
-                      prefixIcon: Icon(Icons.person, color: ArenaColors.caballero,),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta)
+          child: Form(
+            key: _clave,
+            child: Column(
+              children: [
+                CabeceraFormulario(),
+                const SizedBox(height: ArenaMedidas.s32),
+                TextFormField(
+                  decoration: InputDecoration(
+                    labelText: 'Nick',
+                    helperText: '3 a 16 caracteres: letras, números y ...',
+                    helperStyle: ArenaTextos.cuerpoSuave,
+                    prefixIcon: Icon(
+                      Icons.person,
+                      color: ArenaColors.caballero,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(
+                        ArenaMedidas.radioTarjeta,
                       ),
                     ),
-                    maxLength: 16,
                   ),
-                  const SizedBox(height: ArenaMedidas.s32,),
-
-                ],
-              ),
-          )
+                  maxLength: 16,
+                ),
+                const SizedBox(height: ArenaMedidas.s16),
+                CheckboxListTile(
+                  controlAffinity: ListTileControlAffinity.leading,
+                  contentPadding:EdgeInsets.zero,
+                  value: _activo,
+                  onChanged: (v) => setState(() => _activo = v ?? false),
+                  title: Text(
+                    "Acepto las normas de la Arena",
+                    style: ArenaTextos.cuerpo,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
