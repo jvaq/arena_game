@@ -4,6 +4,7 @@ import '../../services/api_service.dart';
 import '../../services/sesion_service.dart';
 import '../../theme/arena_theme.dart';
 import '../../widgets/registro/cabecera_formulario.dart';
+import '../../app/routes.dart';
 
 /// EJERCICIO 2 · Registro: DISEÑO + VALIDACIONES + NAVEGACIÓN.
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Registro».
@@ -20,6 +21,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   final _clave = GlobalKey<FormState>();
   bool _cargando = false;
   bool _activo = false;
+  final _nickCtrl = TextEditingController();
 
   @override
   void dispose() {
@@ -44,16 +46,44 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   //   - más de 16 caracteres               → 'Máximo 16 caracteres'
   //   - algo que no sea letra, número o _  → 'Solo letras, números y _'
   //     (pista: RegExp(r'^[A-Za-z0-9_]+$').hasMatch(nick))
-  // String? _validarNick(String? valor) { ... }
+  String? _validarNick(String? valor) {
+    if (valor == null || valor.trim().isEmpty) {
+      return 'Escribe un nick';
+    }
+    if (valor.length < 3) {
+      return 'Mínimo 3 caracteres';
+    }
+    if (valor.length > 16) {
+      return 'Máximo 16 caracteres';
+    }
+    if (!RegExp(r'^[A-Za-z0-9_]+$').hasMatch(valor)) {
+      return 'Solo letras, números y _';
+    }
+  }
+
 
   Future<void> _entrar() async {
     // TODO 4 (validación): comprueba el formulario (y que las normas estén aceptadas);
     //   si algo falla, sal con `return`.
+    if (!_clave.currentState!.validate() || !_activo) {
+      return;
+    }
     // TODO 5 (navegación): pon _cargando = true (setState) y llama a
     //   `final error = await _registrarYGuardar(_nickCtrl.text.trim());`
     //   - si error != null → muestra un SnackBar con el mensaje
     //   - si es null       → Navigator.pushReplacementNamed(context, Rutas.inicio)
     //   Comprueba `mounted` antes de usar context y deja _cargando = false al acabar.
+    setState(() {
+      _cargando = true;
+    });
+    final error = await _registrarYGuardar(_nickCtrl.text.trim());
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error)),
+      );
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.inicio);
+    }
   }
 
   @override
@@ -81,12 +111,16 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
             child: Column(
               children: [
                 CabeceraFormulario(),
-                const SizedBox(height: ArenaMedidas.s32),
+                const SizedBox(height: ArenaMedidas.s24),
                 TextFormField(
+                  validator: _validarNick,
+                  style: ArenaTextos.cuerpo.copyWith(
+                    fontWeight: FontWeight.normal,
+                  ),
                   decoration: InputDecoration(
                     labelText: 'Nick',
-                    helperText: '3 a 16 caracteres: letras, números y ...',
-                    helperStyle: ArenaTextos.cuerpoSuave,
+                    helperText: '3 a 16 caracteres: letras, números y _',
+                    helperStyle: ArenaTextos.cuerpoSuave.copyWith(fontSize: 12),
                     prefixIcon: Icon(
                       Icons.person,
                       color: ArenaColors.caballero,
@@ -99,16 +133,95 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                   ),
                   maxLength: 16,
                 ),
+                FormField<bool>(
+                  initialValue: _activo,
+                  validator: (value) {
+                    if (value != true) {
+                      return 'Debes aceptar las normas';
+                    }
+                    return null;
+                  },
+                  builder: (state) {
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        CheckboxListTile(
+                          dense: true,
+                          materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                          controlAffinity: ListTileControlAffinity.leading,
+                          contentPadding: EdgeInsets.zero,
+                          visualDensity: VisualDensity.compact,
+                          horizontalTitleGap: ArenaMedidas.s4, //Reduce el espacio horizontal entre el checkbox y el texto
+                          value: state.value,
+                          onChanged: (v) {
+                            state.didChange(v); //Actualiza estado del form field
+                            setState(() => _activo = v ?? false); //Actualiza variable local
+                          },
+                          title: Text(
+                            'Acepto las normas de la Arena',
+                            style: ArenaTextos.cuerpo.copyWith(fontWeight: FontWeight.normal),
+                          ),
+                        ),
+                        if (state.hasError)
+                          Padding(
+                            padding: const EdgeInsets.only(left: ArenaMedidas.s8),
+                            child: Text(
+                              state.errorText!,
+                              style: ArenaTextos.etiqueta.copyWith(
+                                color: ArenaColors.negativo,
+                                fontWeight: FontWeight.normal
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
                 const SizedBox(height: ArenaMedidas.s16),
-                CheckboxListTile(
-                  controlAffinity: ListTileControlAffinity.leading,
-                  contentPadding:EdgeInsets.zero,
-                  value: _activo,
-                  onChanged: (v) => setState(() => _activo = v ?? false),
-                  title: Text(
-                    "Acepto las normas de la Arena",
-                    style: ArenaTextos.cuerpo,
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    style: FilledButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: ArenaMedidas.s16,
+                        horizontal: ArenaMedidas.s24,
+                      ),
+                    ),
+                    onPressed: _cargando
+                        ? null
+                        : () => _clave.currentState?.validate(),
+                    child: _cargando
+                        ? const SizedBox(
+                            width: ArenaMedidas.s24,
+                            height: ArenaMedidas.s24,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: ArenaColors.texto,
+                            ),
+                          )
+                        : Text(
+                            'Entrar a la Arena',
+                            style: ArenaTextos.boton.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
                   ),
+                ),
+                const SizedBox(height: ArenaMedidas.s4),
+                TextButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.ajustes);
+                  },
+                  icon: const Icon(
+                    Icons.settings,
+                    fontWeight: FontWeight.normal,
+                    color: ArenaColors.textoSuave
+                  ),
+                  label: Text(
+                    'Ajustes del servidor',
+                    style: ArenaTextos.cuerpoSuave.copyWith(fontWeight: FontWeight.normal),
+                  )
                 ),
               ],
             ),
