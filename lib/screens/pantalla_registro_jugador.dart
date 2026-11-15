@@ -25,6 +25,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
 
   @override
   void dispose() {
+    _nickCtrl.dispose();
     super.dispose();
   }
 
@@ -59,6 +60,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
     if (!RegExp(r'^[A-Za-z0-9_]+$').hasMatch(valor)) {
       return 'Solo letras, números y _';
     }
+    return null;
   }
 
 
@@ -77,6 +79,12 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
       _cargando = true;
     });
     final error = await _registrarYGuardar(_nickCtrl.text.trim());
+    if (!mounted) return; //se vuelve false cuando el usuario cierra la pantalla
+
+    setState(() {
+      _cargando = false;
+    });
+
     if (error != null) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(error)),
@@ -113,7 +121,20 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                 CabeceraFormulario(),
                 const SizedBox(height: ArenaMedidas.s24),
                 TextFormField(
+                  controller: _nickCtrl,
                   validator: _validarNick,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  //para que el contador se ponga tambien en rojo si hay un error
+                  buildCounter: (context, {required currentLength, required isFocused, required maxLength}) {
+                    final esInvalido = currentLength > 0 && currentLength < 3 || currentLength > 16;
+                    return Text(
+                      '$currentLength/$maxLength',
+                      style: TextStyle(
+                        color: esInvalido ? ArenaColors.negativo : ArenaColors.textoSuave,
+                        fontSize: 12,
+                      ),
+                    );
+                  },
                   style: ArenaTextos.cuerpo.copyWith(
                     fontWeight: FontWeight.normal,
                   ),
@@ -190,7 +211,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                     ),
                     onPressed: _cargando
                         ? null
-                        : () => _clave.currentState?.validate(),
+                        : _entrar,
                     child: _cargando
                         ? const SizedBox(
                             width: ArenaMedidas.s24,
