@@ -1,4 +1,5 @@
 import 'package:arena_game/theme/arena_assets.dart';
+import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/arena_config.dart';
@@ -57,8 +58,39 @@ class _PantallaSplashState extends State<PantallaSplash> {
       body: Stack(
         fit: StackFit.expand,
         children: [
-          Image.asset(ArenaAssets.fondo, fit: BoxFit.cover, errorBuilder: (context, error, stackTrace) => const SizedBox(),),
-
+          Image.asset(
+            ArenaAssets.fondo,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => const SizedBox(),
+          ),
+          ColoredBox(color: ArenaColors.fondo.withValues(alpha: 0.55)),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  ArenaAssets.emblema,
+                  height: 160,
+                  errorBuilder: (context, error, stackTrace) => const SizedBox()
+                ),
+                const SizedBox(height: ArenaMedidas.s16,),
+                Text(
+                  'ARENA',
+                  style: ArenaTextos.titulo.copyWith(color: ArenaColors.dorado)
+                ),
+                const SizedBox(height: ArenaMedidas.s32),
+                const SizedBox(
+                  width: ArenaMedidas.s24,
+                  height: ArenaMedidas.s24,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: ArenaColors.dorado,
+                  ),
+                ),
+                Text('Comprobando sesión...', style: ArenaTextos.cuerpoSuave,)
+              ]
+            ),
+          )
         ],
       )
     );

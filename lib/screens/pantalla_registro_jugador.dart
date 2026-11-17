@@ -199,7 +199,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                     );
                   },
                 ),
-                const SizedBox(height: ArenaMedidas.s16),
+                const SizedBox(height: ArenaMedidas.s8),
                 SizedBox(
                   width: double.infinity,
                   child: FilledButton(
