@@ -22,6 +22,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
 
   @override
   void dispose() {
+    _nickController.dispose();
     super.dispose();
   }
 
@@ -92,14 +93,15 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
 
                 ),
                 TextFormField(
-                  controller: _nickController, // Recuerda declararlo en tu State y liberarlo en dispose()
+                  controller: _nickController,
                   maxLength: 16,
                   textInputAction: TextInputAction.next,
+                  // validator: _validarNick,
                   decoration: const InputDecoration(
                     labelText: 'Nick',
-
-                    prefixIcon: Icon(Icons.person),
-                    border: OutlineInputBorder(),
+                    helperText: "3 a 16 caracteres: letras, números y _",
+                    prefixIcon: Icon(Icons.person,color: Colors.blue,),
+                    border: OutlineInputBorder()
                   ),
                 ),
               ],

@@ -133,6 +133,21 @@ class ArenaTheme {
           textStyle: ArenaTextos.boton,
         ),
       ),
+
+      inputDecorationTheme: InputDecorationTheme(
+        labelStyle: const TextStyle(color: ArenaColors.textoSuave),
+        floatingLabelStyle: const TextStyle(color: ArenaColors.dorado),
+        errorStyle: TextStyle(color: Colors.red),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+          borderSide: const BorderSide(color: ArenaColors.textoSuave),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+          borderSide: const BorderSide(color: ArenaColors.dorado, width: 2),
+        ),
+      ),
+
     );
   }
 }
