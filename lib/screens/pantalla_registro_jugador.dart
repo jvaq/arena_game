@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
 import '../../services/sesion_service.dart';
 import '../../theme/arena_theme.dart';
+import '../../theme/arena_assets.dart';
 
 /// EJERCICIO 2 · Registro: DISEÑO + VALIDACIONES + NAVEGACIÓN.
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Registro».
@@ -15,6 +16,8 @@ class PantallaRegistroJugador extends StatefulWidget {
 
 class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   final _clave=GlobalKey<FormState>();
+  final _nickController = TextEditingController();
+
   bool _cargando = false;
 
   @override
@@ -74,8 +77,31 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
           child: Form(
             key:_clave,
             child:Column(
-              children: [
+              children: [Center(child: Image.asset(
+                  ArenaAssets.emblema,
+                  height: 120,
+                  
+              )
+              ),
+                Text(
+                    "Únete a la Arena",
+                    style: ArenaTextos.subtitulo,
+                ),
+                Text(
+                  "Elige un nick: así te verán en el ranking.",
 
+                ),
+                TextFormField(
+                  controller: _nickController, // Recuerda declararlo en tu State y liberarlo en dispose()
+                  maxLength: 16,
+                  textInputAction: TextInputAction.next,
+                  decoration: const InputDecoration(
+                    labelText: 'Nick',
+
+                    prefixIcon: Icon(Icons.person),
+                    border: OutlineInputBorder(),
+                  ),
+                ),
               ],
             ),
           ),
