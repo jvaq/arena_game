@@ -133,6 +133,23 @@ class ArenaTheme {
           textStyle: ArenaTextos.boton,
         ),
       ),
+
+      //estoy cambiando el color del input por defecto para que sea clarito
+      /*inputDecorationTheme: InputDecorationTheme(
+        labelStyle: const TextStyle(color: ArenaColors.textoSuave),
+        floatingLabelStyle: const TextStyle(color: ArenaColors.dorado),
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: ArenaColors.textoSuave),
+        ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(
+            ArenaMedidas.radioTarjeta,
+          ),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(color: ArenaColors.dorado, width: 2),
+        ),
+      ),*/
     );
   }
 }

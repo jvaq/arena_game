@@ -144,7 +144,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                     helperStyle: ArenaTextos.cuerpoSuave.copyWith(fontSize: 12),
                     prefixIcon: Icon(
                       Icons.person,
-                      color: ArenaColors.caballero,
+                      color: Colors.blueAccent,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
@@ -170,7 +170,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                         CheckboxListTile(
                           dense: true,
                           materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                          controlAffinity: ListTileControlAffinity.leading,
+                          controlAffinity: ListTileControlAffinity.leading, //pone el checkbox a la izquierda
                           contentPadding: EdgeInsets.zero,
                           visualDensity: VisualDensity.compact,
                           horizontalTitleGap: ArenaMedidas.s4, //Reduce el espacio horizontal entre el checkbox y el texto

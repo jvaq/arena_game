@@ -17,7 +17,11 @@ import '../../utils/clase_visual.dart';
 ///   ArenaAssets.avatar(clase), ArenaAssets.personaje(clase), ArenaAssets.fondo, ArenaAssets.plataforma
 ///   jugador.configurado == false → aún no tiene personaje (clase es null)
 class ContenidoInicio extends StatelessWidget {
-  const ContenidoInicio({super.key, required this.jugador, required this.alVolver});
+  const ContenidoInicio({
+    super.key,
+    required this.jugador,
+    required this.alVolver,
+  });
 
   final Jugador jugador;
 
@@ -45,7 +49,60 @@ class ContenidoInicio extends StatelessWidget {
         //   Row: avatar circular con borde del color de la clase · nick (subtitulo) y
         //   «Mago · 21V · 3D» · a la derecha los puntos (ArenaTextos.puntos) y «puntos».
         //   Sin personaje: icono de persona y el texto «Sin personaje».
-        Text('Tarjeta del jugador: ${jugador.nick}', style: ArenaTextos.cuerpo),
+        //Text('Tarjeta del jugador: ${jugador.nick}', style: ArenaTextos.cuerpo),
+        Container(
+          decoration: BoxDecoration(
+            color: ArenaColors.superficie,
+            borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+            border: Border.all(
+              width: ArenaMedidas.grosorBorde,
+              color: ArenaColors.borde,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(ArenaMedidas.s16),
+            child: Row(
+              children: [
+                CircleAvatar(
+                  backgroundImage: jugador.configurado
+                      ? AssetImage(ArenaAssets.avatar(clase))
+                      : null,
+                  radius: ArenaMedidas.radioBoton,
+                  backgroundColor: ArenaColors.fondo,
+                  child: !jugador.configurado
+                      ? const Icon(
+                          Icons.person,
+                          color: Colors.blueAccent,
+                          size: ArenaMedidas.s32,
+                        )
+                      : null,
+                ),
+                const SizedBox(width: ArenaMedidas.s16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(jugador.nick, style: ArenaTextos.cuerpo),
+                      const SizedBox(height: ArenaMedidas.s4),
+                      Text(
+                        jugador.configurado
+                            ? '${nombreClase(jugador.clase)} · ${jugador.victorias}V · ${jugador.derrotas}D'
+                            : 'Sin personaje',
+                        style: ArenaTextos.cuerpoSuave,
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text('${jugador.puntos}', style: ArenaTextos.puntos),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
 
         // TODO 3: ESCENA (widget propio, p. ej. _Escena)
         //   ClipRRect + SizedBox(height: 220) + Stack: fondo (BoxFit.cover), plataforma y
@@ -56,6 +113,8 @@ class ContenidoInicio extends StatelessWidget {
 
         // TODO 4: si !jugador.configurado, un texto centrado:
         //   «Aún no tienes personaje. Créalo para poder combatir.»
+        if (!jugador.configurado)
+          Text('Aún no tienes personaje. Créalo para poder combatir.'),
 
         // TODO 5: MENÚ 2×2 (GridView.count con shrinkWrap y NeverScrollableScrollPhysics,
         //   o Row/Column). Cuatro botones iguales (icono + texto), widget propio _Opcion:
