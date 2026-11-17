@@ -27,72 +27,55 @@ class SelectorClase extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO(grupo F)
     return Row(
-      children: [
-        for (var i = 0; i < clases.length; i++) ...[
-          if (i > 0) const SizedBox(width: ArenaMedidas.s8),
-          Expanded(
-            child: _TarjetaClase(
-              clase: clases[i],
-              seleccionada: clases[i].id == elegida.id,
-              onTap: () => onCambiar(clases[i]),
-            ),
-          ),
-        ],
-      ],
-    );
-  }
-}
+      children: clases.map((clase) {
+        // ¿Es la clase que está elegida ahora?
+        final bool seleccionado = clase.id == elegida.id;
 
-class _TarjetaClase extends StatelessWidget {
-  const _TarjetaClase({
-    required this.clase,
-    required this.seleccionada,
-    required this.onTap,
-  });
+        return Expanded(
+          child: GestureDetector(
+            onTap: () => onCambiar(clase),
+            child: Container(
+              margin: const EdgeInsets.symmetric(horizontal: ArenaMedidas.s4),
+              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 4),
+              decoration: BoxDecoration(
+                color: ArenaColors.superficie,
+                borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+                border: Border.all(
+                  color: seleccionado ? clase.color : ArenaColors.borde,
+                  width: seleccionado
+                      ? ArenaMedidas.grosorBordeSeleccion
+                      : ArenaMedidas.grosorBorde,
+                ),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Avatar redondo
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: const BoxDecoration(
+                      color: ArenaColors.fondo,
+                      shape: BoxShape.circle,
+                    ),
+                    child: ClipOval(child: Image.asset(clase.avatar)),
+                  ),
+                  const SizedBox(width: ArenaMedidas.s8),
 
-  final ClasePersonaje clase;
-  final bool seleccionada;
-  final VoidCallback onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 200),
-        height: 64,
-        padding: const EdgeInsets.symmetric(horizontal: ArenaMedidas.s8),
-        decoration: BoxDecoration(
-          color: ArenaColors.superficie,
-          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
-          border: Border.all(
-            color: seleccionada ? clase.color : ArenaColors.borde,
-            width: seleccionada
-                ? ArenaMedidas.grosorBordeSeleccion
-                : ArenaMedidas.grosorBorde,
-          ),
-        ),
-        child: Row(
-          children: [
-            ClipOval(
-              child: Image.asset(
-                clase.avatar,
-                width: 36,
-                height: 36,
-                fit: BoxFit.cover,
+                  // Nombre de la clase
+                  Flexible(
+                    child: Text(
+                      clase.nombre,
+                      style: ArenaTextos.cuerpo.copyWith(fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const SizedBox(width: ArenaMedidas.s4),
-            Flexible(
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                alignment: Alignment.centerLeft,
-                child: Text(clase.nombre, style: ArenaTextos.cuerpo),
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }).toList(),
     );
   }
 }

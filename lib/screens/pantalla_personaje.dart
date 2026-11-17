@@ -39,21 +39,40 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
 
   /// TODO(grupo I): al cambiar de clase se guarda la nueva y se VACÍA la selección de armas.
   void _cambiarClase(ClasePersonaje nueva) {
-    // setState(() { ... });
+    setState(() {
+      _clase = nueva;
+      _elegidas.clear();
+    });
   }
 
   /// TODO(grupo I): si el arma ya está elegida, quitarla; si no y hay hueco
   /// (`_elegidas.length < _catalogo!.armasPorPersonaje`), añadirla.
   void _alternarArma(Arma arma) {
-    // setState(() { ... });
+    setState(() {
+      final seleccionada = _elegidas.any(
+            (elemento) => elemento.id == arma.id,
+      );
+
+      if (seleccionada) {
+        _elegidas.removeWhere((elemento) => elemento.id == arma.id);
+      } else {
+        if (_elegidas.length < _catalogo!.armasPorPersonaje) {
+          _elegidas.add(arma);
+        }
+      }
+    });
   }
 
   /// TODO(grupo I): true solo cuando hay exactamente `armasPorPersonaje` armas elegidas.
-  bool get _puedeGuardar => false;
+  bool get _puedeGuardar =>  _catalogo != null && _elegidas.length == _catalogo!.armasPorPersonaje;
 
   /// TODO(grupo I): al pulsar «Guardar». Fase 1: SnackBar con «Personaje guardado».
   /// Fase 2 (opcional): PUT /jugadores/{id}/personaje con la API.
-  void _guardar() {}
+  void _guardar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Personaje guardado')),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +104,15 @@ class _PantallaPersonajeState extends State<PantallaPersonaje> {
               colorClase: clase.color,
               onAlternar: _alternarArma,
             ),
-            const SizedBox(height: ArenaMedidas.s24),
-            FilledButton(
-              onPressed: _puedeGuardar ? _guardar : null,
-              child: const Text('Guardar personaje'),
+          const SizedBox(height: ArenaMedidas.s24),
+          FilledButton(
+            onPressed: _puedeGuardar ? _guardar : null,
+            child: Text(
+            _puedeGuardar
+                ? 'Guardar personaje'
+                : 'Elige ${catalogo.armasPorPersonaje} armas para guardar',
             ),
+          ),
           ],
         ),
       ),
