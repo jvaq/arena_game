@@ -63,19 +63,31 @@ class ContenidoInicio extends StatelessWidget {
             padding: const EdgeInsets.all(ArenaMedidas.s16),
             child: Row(
               children: [
-                CircleAvatar(
-                  backgroundImage: jugador.configurado
-                      ? AssetImage(ArenaAssets.avatar(clase))
-                      : null,
-                  radius: ArenaMedidas.radioBoton,
-                  backgroundColor: ArenaColors.fondo,
-                  child: !jugador.configurado
-                      ? const Icon(
-                          Icons.person,
-                          color: Colors.blueAccent,
-                          size: ArenaMedidas.s32,
-                        )
-                      : null,
+                //Hago un contenedor exterior para hacer el borde del color de la clase
+                Container(
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: jugador.configurado
+                          ? ArenaColors.deClase(clase)
+                          : ArenaColors.borde,
+                      width: 2
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: jugador.configurado
+                        ? AssetImage(ArenaAssets.avatar(clase))
+                        : null,
+                    radius: ArenaMedidas.radioBoton,
+                    backgroundColor: ArenaColors.fondo,
+                    child: !jugador.configurado
+                        ? const Icon(
+                      Icons.person,
+                      color: Colors.blueAccent,
+                      size: ArenaMedidas.s32,
+                    )
+                        : null,
+                  ),
                 ),
                 const SizedBox(width: ArenaMedidas.s16),
                 Expanded(
@@ -114,7 +126,7 @@ class ContenidoInicio extends StatelessWidget {
         // TODO 4: si !jugador.configurado, un texto centrado:
         //   «Aún no tienes personaje. Créalo para poder combatir.»
         if (!jugador.configurado)
-          Text('Aún no tienes personaje. Créalo para poder combatir.'),
+          Center(child: Text('Aún no tienes personaje. Créalo para poder combatir.', style: ArenaTextos.cuerpoSuave.copyWith(fontSize: 12))),
 
         // TODO 5: MENÚ 2×2 (GridView.count con shrinkWrap y NeverScrollableScrollPhysics,
         //   o Row/Column). Cuatro botones iguales (icono + texto), widget propio _Opcion:
