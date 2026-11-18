@@ -98,7 +98,7 @@ class ContenidoInicio extends StatelessWidget {
                       const SizedBox(height: ArenaMedidas.s4),
                       Text(
                         jugador.configurado
-                            ? '${nombreClase(jugador.clase)} · ${jugador.victorias}V · ${jugador.derrotas}D'
+                            ? '${nombreClase(jugador.clase)} · ${jugador.victorias} V · ${jugador.derrotas} D'
                             : 'Sin personaje',
                         style: ArenaTextos.cuerpoSuave,
                       ),
