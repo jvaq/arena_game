@@ -136,3 +136,18 @@ class ArenaTheme {
     );
   }
 }
+class ArenaInputs {
+  //vuelve el contructor privado
+  ArenaInputs._();
+  static InputDecoration decoracion({
+    required String etiqueta,
+    required String ayuda,
+    required IconData icono,
+    }) {
+    return InputDecoration(
+      labelText: etiqueta,
+      helperText: ayuda,
+      prefixIcon: Icon(icono),
+    );
+  }
+}
