@@ -115,13 +115,54 @@ class ContenidoInicio extends StatelessWidget {
             ),
           ),
         ),
+        const SizedBox(width: ArenaMedidas.s16),
 
         // TODO 3: ESCENA (widget propio, p. ej. _Escena)
         //   ClipRRect + SizedBox(height: 220) + Stack: fondo (BoxFit.cover), plataforma y
         //   personaje colocados con Align. Sin personaje: un icono de interrogación.
         //   Usa errorBuilder en Image.asset por si falta alguna imagen.
-        const SizedBox(height: ArenaMedidas.s16),
-        Image.asset(ArenaAssets.emblema, height: 96),
+        ClipRRect(
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+          child: SizedBox(
+            height: 220,
+            width: double.infinity,
+            child: Stack(
+              children: [
+                Positioned.fill(
+                    child: Image.asset(
+                      ArenaAssets.fondo,
+                      fit: BoxFit.cover,
+                      errorBuilder: (_, __, ___) => Container(color: ArenaColors.superficie),
+                    ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Image.asset(
+                    ArenaAssets.plataforma,
+                    width: 170,
+                    fit: BoxFit.contain,
+                    errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                  )
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: jugador.configurado
+                    ? Image.asset(
+                      ArenaAssets.personaje(clase),
+                      height: 120,
+                      fit: BoxFit.contain,
+                      errorBuilder: (_, __, ___) => const SizedBox.shrink(),
+                      )
+                    : const Icon(
+                    Icons.question_mark,
+                    color: ArenaColors.textoSuave,
+                    size: ArenaMedidas.s32,
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
 
         // TODO 4: si !jugador.configurado, un texto centrado:
         //   «Aún no tienes personaje. Créalo para poder combatir.»
