@@ -1,6 +1,6 @@
 import 'package:arena_game/widgets/cabecera_formulario.dart';
 import 'package:flutter/material.dart';
-
+import 'package:arena_game/app/routes.dart';
 import '../../services/api_service.dart';
 import '../../services/sesion_service.dart';
 import '../../theme/arena_theme.dart';
@@ -46,8 +46,58 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   //   - algo que no sea letra, número o _  → 'Solo letras, números y _'
   //     (pista: RegExp(r'^[A-Za-z0-9_]+$').hasMatch(nick))
   // String? _validarNick(String? valor) { ... }
+  String? _validarNick(String? valor) {
+    final String nick = valor?.trim() ?? '';
 
-  Future<void> _entrar() async {
+    if (nick.isEmpty) {
+      return 'Escribe un nick';
+    }
+
+    if (nick.length < 3) {
+      return 'Mínimo 3 caracteres';
+    }
+
+    if (nick.length > 16) {
+      return 'Máximo 16 caracteres';
+    }
+
+    if (!RegExp(r'^[A-Za-z0-9_]+$').hasMatch(nick)) {
+      return 'Solo letras, números y _';
+    }
+
+    return null;
+  }
+
+  //creo un widget para crear la clasilla de normas el checkbox
+  Widget _crearCasillaNormas() {
+    return FormField<bool>(
+      initialValue: false,
+      validator: (valor) =>
+      valor == true ? null : 'Debes aceptar las normas',
+      builder: (estado) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CheckboxListTile(
+              title: const Text('Acepto las normas de la Arena'),
+              value: estado.value ?? false,
+              onChanged: (valor) => estado.didChange(valor),
+              controlAffinity: ListTileControlAffinity.leading,
+            ),
+            if (estado.hasError)
+              Text(
+                estado.errorText!,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.error,
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
+
     // TODO 4 (validación): comprueba el formulario (y que las normas estén aceptadas);
     //   si algo falla, sal con `return`.
     // TODO 5 (navegación): pon _cargando = true (setState) y llama a
@@ -55,7 +105,39 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
     //   - si error != null → muestra un SnackBar con el mensaje
     //   - si es null       → Navigator.pushReplacementNamed(context, Rutas.inicio)
     //   Comprueba `mounted` antes de usar context y deja _cargando = false al acabar.
+
+
+Future<void> _entrar() async {
+  if (!_formKey.currentState!.validate()) {
+    return;
   }
+
+  setState(() {
+    _cargando = true;
+  });
+
+  final String? error =
+  await _registrarYGuardar(_nickCtrl.text.trim());
+
+  if (!mounted) return;
+
+  if (error != null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(error)),
+    );
+
+    setState(() {
+      _cargando = false;
+    });
+    return;
+  }
+
+  setState(() {
+    _cargando = false;
+  });
+
+  Navigator.pushReplacementNamed(context, Routes.inicio);
+}
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +175,28 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                     icono: Icons.person),
                     maxLength: 16,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    validator: _validarNick,
                   ),
+                _crearCasillaNormas(), //se creo en un metodo despues de _validarNick
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: _cargando ? null : _entrar,
+                    child: _cargando
+                        ? const SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                        : const Text('Entrar a la Arena'),
+                  ),
+                ),
+                TextButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.ajustes);
+                  },
+                  icon: const Icon(Icons.settings),
+                  label: const Text('Ajustes del servidor'),
                 ),
               ],
             ),
