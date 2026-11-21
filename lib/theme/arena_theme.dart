@@ -146,6 +146,17 @@ class ArenaTheme {
           borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
           borderSide: const BorderSide(color: ArenaColors.dorado, width: 2),
         ),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+        ),
+        errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+          borderSide: const BorderSide(color: Colors.red),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+          borderSide: const BorderSide(color: Colors.red, width: 2),
+        ),
       ),
 
     );
