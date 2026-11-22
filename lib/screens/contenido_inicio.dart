@@ -4,6 +4,7 @@ import '../../models/models.dart';
 import '../../theme/arena_assets.dart';
 import '../../theme/arena_theme.dart';
 import '../../utils/clase_visual.dart';
+import '../app/routes.dart';
 
 /// EJERCICIO 3 · Contenido del Inicio: DISEÑO + NAVEGACIÓN.
 ///
@@ -29,10 +30,10 @@ class ContenidoInicio extends StatelessWidget {
   final VoidCallback alVolver;
 
   // TODO 6 (navegación): método que abre una ruta y, al volver, llama a alVolver():
-  //   Future<void> _ir(BuildContext context, String ruta) async {
-  //     await Navigator.pushNamed(context, ruta);
-  //     alVolver();
-  //   }
+  Future<void> _ir(BuildContext context, String ruta) async {
+    await Navigator.pushNamed(context, ruta);
+    alVolver();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +116,7 @@ class ContenidoInicio extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: ArenaMedidas.s16),
+        const SizedBox(height: ArenaMedidas.s8),
 
         // TODO 3: ESCENA (widget propio, p. ej. _Escena)
         //   ClipRRect + SizedBox(height: 220) + Stack: fondo (BoxFit.cover), plataforma y
@@ -136,7 +137,7 @@ class ContenidoInicio extends StatelessWidget {
                     ),
                 ),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: Alignment(0, 0.55),
                   child: Image.asset(
                     ArenaAssets.plataforma,
                     width: 170,
@@ -145,7 +146,7 @@ class ContenidoInicio extends StatelessWidget {
                   )
                 ),
                 Align(
-                  alignment: Alignment.center,
+                  alignment: Alignment(0, -0.35),
                   child: jugador.configurado
                     ? Image.asset(
                       ArenaAssets.personaje(clase),
@@ -156,18 +157,21 @@ class ContenidoInicio extends StatelessWidget {
                     : const Icon(
                     Icons.question_mark,
                     color: ArenaColors.textoSuave,
-                    size: ArenaMedidas.s32,
+                    size: 80,
                   ),
                 )
               ],
             ),
           ),
         ),
+        const SizedBox(height: ArenaMedidas.s8),
 
         // TODO 4: si !jugador.configurado, un texto centrado:
         //   «Aún no tienes personaje. Créalo para poder combatir.»
         if (!jugador.configurado)
           Center(child: Text('Aún no tienes personaje. Créalo para poder combatir.', style: ArenaTextos.cuerpoSuave.copyWith(fontSize: 12))),
+
+        const SizedBox(height: ArenaMedidas.s8),
 
         // TODO 5: MENÚ 2×2 (GridView.count con shrinkWrap y NeverScrollableScrollPhysics,
         //   o Row/Column). Cuatro botones iguales (icono + texto), widget propio _Opcion:
@@ -176,7 +180,34 @@ class ContenidoInicio extends StatelessWidget {
         //     Ranking       → Rutas.ranking
         //     Historial     → Rutas.historial
         //   Cada botón navega con el método del TODO 6.
+        GridView.count(
+          crossAxisCount: 2,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          mainAxisSpacing: ArenaMedidas.s8,
+          crossAxisSpacing: ArenaMedidas.s8,
+          children: [
+            _Opcion(),
+            _Opcion(),
+            _Opcion(),
+            _Opcion(),
+          ],
+        )
       ],
     );
+  }
+}
+
+class _Opcion extends StatelessWidget {
+  const _Opcion({
+    super.key,
+    // Parámetros del constructor (p. ej. texto, icono, estado, acción...)
+  });
+
+  // Campos `final` del widget
+
+  @override
+  Widget build(BuildContext context) {
+    return const SizedBox.shrink();
   }
 }
