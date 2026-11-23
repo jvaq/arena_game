@@ -186,11 +186,36 @@ class ContenidoInicio extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           mainAxisSpacing: ArenaMedidas.s8,
           crossAxisSpacing: ArenaMedidas.s8,
+          childAspectRatio: 2,
           children: [
-            _Opcion(),
-            _Opcion(),
-            _Opcion(),
-            _Opcion(),
+            _Opcion(
+              activado: jugador.configurado,
+              estado: false,
+              alPulsar: jugador.configurado ? () {} : null,
+              texto: 'Combatir',
+              icono: ArenaAssets.emblema,
+            ),
+            _Opcion(
+              activado: true,
+              estado: !jugador.configurado,
+              alPulsar: () {},
+              texto: 'Mi personaje',
+              icono: ArenaAssets.emblema,
+            ),
+            _Opcion(
+              activado: true,
+              estado: false,
+              alPulsar: () {},
+              texto: 'Ranking',
+              icono: ArenaAssets.trofeo,
+            ),
+            _Opcion(
+              activado: true,
+              estado: false,
+              alPulsar: jugador.configurado ? () {} : null,
+              texto: 'Historial',
+              icono: ArenaAssets.emblema,
+            ),
           ],
         )
       ],
@@ -199,15 +224,65 @@ class ContenidoInicio extends StatelessWidget {
 }
 
 class _Opcion extends StatelessWidget {
+  final String texto;
+  final String icono;
+  final bool estado;
+  final bool activado;
+  final VoidCallback? alPulsar;
+
   const _Opcion({
     super.key,
-    // Parámetros del constructor (p. ej. texto, icono, estado, acción...)
+    required this.texto,
+    required this.icono,
+    required this.estado,
+    required this.activado,
+    required this.alPulsar,
   });
-
-  // Campos `final` del widget
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox.shrink();
+    return GestureDetector(
+      onTap: activado ? alPulsar : null,
+      child: Container(
+        padding: const EdgeInsets.all(ArenaMedidas.s8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+          border: Border.all(
+            color: estado
+                ? ArenaColors.dorado
+                : ArenaColors.borde,
+            width: estado
+                ? ArenaMedidas.grosorBordeSeleccion
+                : ArenaMedidas.grosorBorde
+          ),
+          color: ArenaColors.superficie,
+        ),
+        child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                    icono,
+                    width: ArenaMedidas.s32,
+                    height: ArenaMedidas.s32,
+                    fit: BoxFit.contain,
+                    color: activado ? null : ArenaColors.textoSuave,
+                ),
+                const SizedBox(height: ArenaMedidas.s8),
+                Text(
+                  texto,
+                  textAlign: TextAlign.center,
+                  style: (activado ? ArenaTextos.cuerpo : ArenaTextos.cuerpoSuave).copyWith(
+                    color: !activado
+                        ? ArenaColors.textoSuave
+                        : (estado ? ArenaColors.dorado : ArenaColors.texto),
+                  ),
+                )
+              ],
+            )
+        ),
+      )
+    );
   }
 }
