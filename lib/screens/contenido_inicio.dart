@@ -186,35 +186,35 @@ class ContenidoInicio extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           mainAxisSpacing: ArenaMedidas.s8,
           crossAxisSpacing: ArenaMedidas.s8,
-          childAspectRatio: 2,
+          childAspectRatio: 1.9,
           children: [
             _Opcion(
               activado: jugador.configurado,
               estado: false,
-              alPulsar: jugador.configurado ? () {} : null,
+              alPulsar: jugador.configurado ? () => _ir(context, Routes.rival) : null,
               texto: 'Combatir',
-              icono: ArenaAssets.emblema,
+              icono: ArenaAssets.combate,
             ),
             _Opcion(
               activado: true,
               estado: !jugador.configurado,
-              alPulsar: () {},
+              alPulsar: () => _ir(context, Routes.rival),
               texto: 'Mi personaje',
-              icono: ArenaAssets.emblema,
+              icono: ArenaAssets.iconoPersonaje,
             ),
             _Opcion(
               activado: true,
               estado: false,
-              alPulsar: () {},
+              alPulsar: () => _ir(context, Routes.ranking),
               texto: 'Ranking',
-              icono: ArenaAssets.trofeo,
+              icono: ArenaAssets.ranking,
             ),
             _Opcion(
               activado: true,
               estado: false,
-              alPulsar: jugador.configurado ? () {} : null,
+              alPulsar: () => _ir(context, Routes.historial),
               texto: 'Historial',
-              icono: ArenaAssets.emblema,
+              icono: ArenaAssets.historial,
             ),
           ],
         )
@@ -231,7 +231,6 @@ class _Opcion extends StatelessWidget {
   final VoidCallback? alPulsar;
 
   const _Opcion({
-    super.key,
     required this.texto,
     required this.icono,
     required this.estado,
@@ -243,33 +242,34 @@ class _Opcion extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: activado ? alPulsar : null,
-      child: Container(
-        padding: const EdgeInsets.all(ArenaMedidas.s8),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
-          border: Border.all(
-            color: estado
-                ? ArenaColors.dorado
-                : ArenaColors.borde,
-            width: estado
-                ? ArenaMedidas.grosorBordeSeleccion
-                : ArenaMedidas.grosorBorde
+      child: Opacity(
+        opacity: activado ? 1.0 : 0.45,
+        child: Container(
+          padding: const EdgeInsets.all(ArenaMedidas.s4),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+            border: Border.all(
+              color: estado ? ArenaColors.dorado : ArenaColors.borde,
+              width: estado
+                  ? ArenaMedidas.grosorBordeSeleccion
+                  : ArenaMedidas.grosorBorde,
+            ),
+            color: ArenaColors.superficie,
           ),
-          color: ArenaColors.superficie,
-        ),
-        child: Center(
+          child: Center(
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Image.asset(
-                    icono,
-                    width: ArenaMedidas.s32,
-                    height: ArenaMedidas.s32,
-                    fit: BoxFit.contain,
-                    color: activado ? null : ArenaColors.textoSuave,
+                  icono,
+                  width: ArenaMedidas.s32,
+                  height: ArenaMedidas.s32,
+                  fit: BoxFit.contain,
+                  color: activado ? null : ArenaColors.textoSuave,
                 ),
-                const SizedBox(height: ArenaMedidas.s8),
+                const SizedBox(height: ArenaMedidas.s4),
                 Text(
                   texto,
                   textAlign: TextAlign.center,
@@ -278,11 +278,12 @@ class _Opcion extends StatelessWidget {
                         ? ArenaColors.textoSuave
                         : (estado ? ArenaColors.dorado : ArenaColors.texto),
                   ),
-                )
+                ),
               ],
-            )
+            ),
+          ),
         ),
-      )
+      ),
     );
   }
 }
