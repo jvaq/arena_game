@@ -1,7 +1,10 @@
+import 'package:arena_game/theme/arena_assets.dart';
+import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/arena_config.dart';
 import '../../services/sesion_service.dart';
+import '../app/routes.dart';
 
 /// EJERCICIO 1 · Splash: DISEÑO + NAVEGACIÓN.
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Splash».
@@ -31,9 +34,14 @@ class _PantallaSplashState extends State<PantallaSplash> {
     //   - si hay sesión      → Rutas.inicio
     // (pushReplacement: así el botón «atrás» no vuelve al Splash).
     // ignore: unnecessary_null_comparison
-    if (sesion == null) {
+      if (sesion == null) {
+        Navigator.pushReplacementNamed(context, Routes.registro);
+      }else{
+        Navigator.pushReplacementNamed((context), Routes.inicio);
+      }
 
-    }
+
+
   }
 
   @override
@@ -49,7 +57,26 @@ class _PantallaSplashState extends State<PantallaSplash> {
     //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
     //   - Añade errorBuilder a las Image.asset por si falta una imagen.
     return Scaffold(
-      body: Container()
+      body: Stack(
+        fit: .expand,
+        children: [
+          Image.asset(ArenaAssets.fondo,fit: .cover,),
+          Center(
+            child: Column(
+              mainAxisSize: .min,
+              children: [
+                Image.asset(ArenaAssets.emblema,height: 160,),
+                Text("ARENA",style: ArenaTextos.titulo .copyWith(color: ArenaColors.dorado),),
+                SizedBox(height: ArenaMedidas.s32,
+                ),
+                CircularProgressIndicator(color: ArenaColors.dorado,),
+                SizedBox(height: ArenaMedidas.s16,),
+                Text("Comprobando sesión...",style: ArenaTextos.cuerpoSuave,)
+              ],
+            ),
+          )
+        ],
+      )
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:arena_game/theme/arena_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/api_service.dart';
@@ -71,9 +72,13 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(ArenaMedidas.s24),
-          child: Column(
-            children: [
-            ],
+          child: Form(child:
+            Column(children: [
+              Image.asset(ArenaAssets.emblema),
+              Text("ÚNETE A LA ARENA",),
+              Text("Elige un nick: así te verán en el ranking",),
+              
+            ],),
           ),
         ),
       ),

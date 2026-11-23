@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../pieza_pendiente.dart';
-
 /// PIEZA C · Los tres estados alternativos de la pantalla Ranking.
 /// Cada uno es un widget que ocupa toda la zona de la lista.
 
@@ -12,7 +10,7 @@ class RankingCargando extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(grupo C)
-    return const PiezaPendiente('RankingCargando');
+    return const Text('RankingCargando');
   }
 }
 

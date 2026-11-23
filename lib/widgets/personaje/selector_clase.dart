@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../models/models.dart';
-import '../pieza_pendiente.dart';
 import '../../theme/arena_assets.dart';
 import '../../theme/arena_theme.dart';
 
