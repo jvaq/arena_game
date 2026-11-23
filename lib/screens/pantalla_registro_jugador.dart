@@ -51,10 +51,10 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
     if (valor == null || valor.trim().isEmpty) {
       return 'Escribe un nick';
     }
-    if (valor.length < 3) {
+    if (valor.trim().length < 3) {
       return 'Mínimo 3 caracteres';
     }
-    if (valor.length > 16) {
+    if (valor.trim().length > 16) {
       return 'Máximo 16 caracteres';
     }
     if (!RegExp(r'^[A-Za-z0-9_]+$').hasMatch(valor)) {
