@@ -22,6 +22,12 @@ class ArenaAssets {
   static const iconoAtaque = '$_img/ui/icono_ataque.png';
   static const iconoVelocidad = '$_img/ui/icono_velocidad.png';
 
+  //pantalla contenido_inicio
+  static const combate = '$_img/ui/rival.png';
+  static const iconoPersonaje = '$_img/ui/personaje.png';
+  static const ranking = '$_img/ui/ranking.png';
+  static const historial = '$_img/ui/historial.png';
+
   /// Medalla de una posición del podio (1, 2 o 3). Devuelve null si no hay.
   static String? medalla(int posicion) {
     switch (posicion) {
