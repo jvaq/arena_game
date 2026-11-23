@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../services/api_service.dart';
 import '../../services/sesion_service.dart';
 import '../../theme/arena_theme.dart';
+import '../../widgets/registro/cabeceraFormulario.dart';
+import '../../app/routes.dart';
 
 /// EJERCICIO 2 · Registro: DISEÑO + VALIDACIONES + NAVEGACIÓN.
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Registro».
@@ -14,7 +16,10 @@ class PantallaRegistroJugador extends StatefulWidget {
 }
 
 class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
-  // TODO 1: crea la GlobalKey<FormState> del formulario (ver ejercicios de formularios).
+  final _formKey = GlobalKey<FormState>();
+  final _nickCtrl = TextEditingController();
+
+  bool _aceptaNormas = false;
   bool _cargando = false;
 
   @override
@@ -73,6 +78,8 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
           padding: const EdgeInsets.all(ArenaMedidas.s24),
           child: Column(
             children: [
+              Image.asset('assets/images/ui/emblema.png',
+              )
             ],
           ),
         ),
