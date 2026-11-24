@@ -1,7 +1,10 @@
+import 'package:arena_game/app/routes.dart';
+import 'package:arena_game/theme/arena_assets.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/arena_config.dart';
 import '../../services/sesion_service.dart';
+import '../theme/arena_theme.dart';
 
 /// EJERCICIO 1 · Splash: DISEÑO + NAVEGACIÓN.
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Splash».
@@ -19,7 +22,7 @@ class _PantallaSplashState extends State<PantallaSplash> {
     _arrancar();
   }
 
-  /// Ya hecho: espera un momento y lee la sesión guardada (`sesion` es null si no hay).
+
   Future<void> _arrancar() async {
     final espera = Future<void>.delayed(ArenaConfig.esperaSplash);
     final sesion = await const SesionService().leer();
@@ -32,7 +35,9 @@ class _PantallaSplashState extends State<PantallaSplash> {
     // (pushReplacement: así el botón «atrás» no vuelve al Splash).
     // ignore: unnecessary_null_comparison
     if (sesion == null) {
-
+      Navigator.pushReplacementNamed(context, Routes.registro);
+    }else{
+      Navigator.pushReplacementNamed(context, Routes.registro);
     }
   }
 
@@ -49,7 +54,42 @@ class _PantallaSplashState extends State<PantallaSplash> {
     //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
     //   - Añade errorBuilder a las Image.asset por si falta una imagen.
     return Scaffold(
-      body: Container()
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          color :Colors.black,
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(ArenaAssets.emblema,height: 160,errorBuilder: (context,error,stackTrace) => const Icon(
+                  Icons.error,size: 80,color:Colors.white,
+                ),
+                ),
+                const SizedBox(height:ArenaMedidas.s32),
+                Text(
+                  'ARENA',
+                  style: ArenaTextos.titulo.copyWith(
+                    color: ArenaColors.dorado,
+                  ),
+                ),
+                const SizedBox(height: ArenaMedidas.s32),
+                const CircularProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(ArenaColors.dorado),
+                ),
+                const SizedBox(height: ArenaMedidas.s16),
+                Text(
+                  'Comprobando sesión…',
+                  style: ArenaTextos.cuerpoSuave,
+                ),
+              ],
+            ),
+          ),
+        ),
+      )
     );
   }
 }
