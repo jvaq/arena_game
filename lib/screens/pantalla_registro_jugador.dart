@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import '../../services/api_service.dart';
@@ -34,6 +33,7 @@ class _PantallaRegistroJugadorState
 
   // Sends the nick to the server and saves the session.
   // Returns null if successful, or an error message.
+
   Future<String?> _registrarYGuardar(String nick) async {
     try {
       final nuevo = await ArenaApi.crear().registrar(nick);

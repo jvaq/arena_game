@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Arena',
       debugShowCheckedModeBanner: false,
       theme: ArenaTheme.oscuro(),
-      initialRoute: Routes.registro,
+      initialRoute: Routes.splash,
       routes: Routes.mapa,
     );
   }
