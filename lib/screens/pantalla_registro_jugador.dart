@@ -90,8 +90,12 @@ const SizedBox(height: ArenaMedidas.s32),
 TextFormField(
 controller: _nickCtrl,
 maxLength: 16,
+style: const TextStyle(fontSize: 18),
 decoration: InputDecoration(
+  contentPadding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
 labelText: 'Nick',
+  labelStyle: const TextStyle(fontSize: 16),
+  helperStyle: const TextStyle(fontSize: 13),
 helperText: '3 a 16 caracteres: letras, números y _',
 prefixIcon: const Icon(Icons.person),
 filled: true,
@@ -103,7 +107,7 @@ borderSide: BorderSide(color: ArenaColors.borde),
 enabledBorder: OutlineInputBorder(
 borderRadius: BorderRadius.circular(16),
 borderSide: BorderSide(color: ArenaColors.borde),
-),f
+),
 focusedBorder: OutlineInputBorder(
 borderRadius: BorderRadius.circular(16),
 borderSide: const BorderSide(color: ArenaColors.dorado, width: 1.9),
@@ -113,7 +117,7 @@ validator: _validarNick,
 autovalidateMode: AutovalidateMode.onUserInteraction,
 ),
 
-// Normas: checkbox dorado
+
 CheckboxListTile(
 title: const Text('Acepto las normas de la Arena'),
 value: _aceptaNormas,
@@ -131,7 +135,7 @@ Text(
 'Debes aceptar las normas',
 style: TextStyle(
 color: Theme.of(context).colorScheme.error,
-fontSize: 12,
+fontSize: 15,
 ),
 ),
 const SizedBox(height: ArenaMedidas.s16),

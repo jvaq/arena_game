@@ -19,13 +19,17 @@ class CabeceraFormulario extends StatelessWidget {
       children: [
         Image.asset(
           ArenaAssets.emblema,
-          height: 100,
-          errorBuilder: (_, __, ___) => const Icon(Icons.shield, size: 100),
+          height: 140,
+          errorBuilder: (_, __, ___) => const Icon(Icons.shield, size: 140),
         ),
         const SizedBox(height: ArenaMedidas.s16),
-        Text(titulo, style: ArenaTextos.subtitulo, textAlign: TextAlign.center),
+        Text(titulo,
+            style: ArenaTextos.subtitulo.copyWith(fontSize: 28),
+            textAlign: TextAlign.center),
         const SizedBox(height: ArenaMedidas.s16),
-        Text(subtitulo, style: ArenaTextos.cuerpoSuave, textAlign: TextAlign.center),
+        Text(subtitulo,
+            style: ArenaTextos.cuerpoSuave.copyWith(fontSize: 16),
+            textAlign: TextAlign.center),
       ],
     );
   }
