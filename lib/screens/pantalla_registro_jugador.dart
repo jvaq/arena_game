@@ -21,8 +21,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   // TODO 1: crea la GlobalKey<FormState> del formulario (ver ejercicios de formularios).
   bool _cargando = false;
   bool _aceptaNormas = false; //
-  final _formKey = GlobalKey<
-      FormState>(); // Ejecuta todas las validaciones a la vez cuando se pulsa el boton
+  final _formKey = GlobalKey<FormState>(); // Ejecuta todas las validaciones a la vez cuando se pulsa el boton
   final _nickCtrl = TextEditingController(); // GUarda la informacion que el usuario mete en el campo nick
 
   @override
@@ -137,7 +136,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                   titulo: 'Únete a la Arena',
                   subtitulo: 'Elige un nick: así te verán en el ranking.',
                 ),
-                const SizedBox(height: ArenaMedidas.s24),
+                const SizedBox(height: ArenaMedidas.s24),  // uso sized box porque se requiere en la practica, además tiene mejor rendimiento que un container y con la const SizedBox(height: ArenaMedidas.s16) siempre se redibuja igual
                 TextFormField(
                   controller: _nickCtrl,
                   maxLength: 16,
