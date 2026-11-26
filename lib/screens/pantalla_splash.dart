@@ -48,6 +48,10 @@ class _PantallaSplashState extends State<PantallaSplash> {
     //       «Comprobando sesión…» con ArenaTextos.cuerpoSuave
     //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
     //   - Añade errorBuilder a las Image.asset por si falta una imagen.
+
+    
+
+
     return Scaffold(
       body: Container()
     );

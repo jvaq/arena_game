@@ -29,9 +29,9 @@ class SelectorClase extends StatelessWidget {
     // TODO(grupo F)
     return Row(
       children: [
-        SelectorPersonaje(personaje: clases.first.nombre),
-        SelectorPersonaje(personaje: clases[1].nombre),
-        SelectorPersonaje(personaje: clases[2].nombre),
+        SelectorPersonaje(personaje: clases.first.id),
+        SelectorPersonaje(personaje: clases[1].id),
+        SelectorPersonaje(personaje: clases[2].id),
       ],
     );
   }
