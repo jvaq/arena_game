@@ -242,7 +242,6 @@ class ContenidoInicio extends StatelessWidget {
     required this.jugador,
     required this.alVolver,
   });
-
   final Jugador jugador;
 
   /// Llámala al volver de otra pantalla para recargar los datos.

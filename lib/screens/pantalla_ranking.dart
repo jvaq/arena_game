@@ -51,24 +51,26 @@ class _PantallaRankingState extends State<PantallaRanking> {
 
 
 
-          return Column(
-            children: [
-              Expanded(
-                child: ListView.separated(
-                  padding: const EdgeInsets.all(ArenaMedidas.s16),
-                  itemCount: ranking.top.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 6),
-                  itemBuilder: (_, i) => FilaRanking(
-                    entrada: ranking.top[i],
-                    resaltada: ranking.top[i].id == ranking.tu.id,
+          return SafeArea(
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView.separated(
+                    padding: const EdgeInsets.all(ArenaMedidas.s16),
+                    itemCount: ranking.top.length,
+                    separatorBuilder: (_, __) => const SizedBox(height: 6),
+                    itemBuilder: (_, i) => FilaRanking(
+                      entrada: ranking.top[i],
+                      resaltada: ranking.top[i].id == ranking.tu.id,
+                    ),
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(ArenaMedidas.s16),
-                child: TarjetaTuPosicion(entrada: ranking.tu),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(ArenaMedidas.s16),
+                  child: TarjetaTuPosicion(entrada: ranking.tu),
+                ),
+              ],
+            ),
           );
         },
       ),
