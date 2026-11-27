@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../app/routes.dart';
-import '../../models/models.dart';
-import '../../services/api_service.dart';
-import '../../services/sesion_service.dart';
-import '../../theme/arena_theme.dart';
+import '../app/routes.dart';
+import '../models/models.dart';
+import '../services/api_service.dart';
+import '../services/sesion_service.dart';
+import '../theme/arena_theme.dart';
 import 'contenido_inicio.dart';
 
 /// YA HECHA (no hay que editarla): carga los datos del jugador y muestra
@@ -32,7 +32,11 @@ class _PantallaInicioState extends State<PantallaInicio> {
     return _api.obtenerJugador(sesion.id);
   }
 
-  void _recargar() => setState(() => _futuro = _cargar());
+  void _recargar() {
+    setState(() {
+      _futuro = _cargar();
+    });
+  }
 
   Future<void> _cerrarSesion() async {
     await const SesionService().cerrar();
@@ -66,11 +70,22 @@ class _PantallaInicioState extends State<PantallaInicio> {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.cloud_off, size: 48, color: ArenaColors.textoSuave),
+                    const Icon(
+                      Icons.cloud_off,
+                      size: 48,
+                      color: ArenaColors.textoSuave,
+                    ),
                     const SizedBox(height: ArenaMedidas.s16),
-                    Text(snap.error.toString(), textAlign: TextAlign.center, style: ArenaTextos.cuerpo),
+                    Text(
+                      snap.error.toString(),
+                      textAlign: TextAlign.center,
+                      style: ArenaTextos.cuerpo,
+                    ),
                     const SizedBox(height: ArenaMedidas.s16),
-                    ElevatedButton(onPressed: _recargar, child: const Text('Reintentar')),
+                    ElevatedButton(
+                      onPressed: _recargar,
+                      child: const Text('Reintentar'),
+                    ),
                   ],
                 ),
               ),

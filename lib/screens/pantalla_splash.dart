@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-import '../../config/arena_config.dart';
-import '../../services/sesion_service.dart';
+import '../app/routes.dart';
+import '../config/arena_config.dart';
+import '../services/sesion_service.dart';
+import '../theme/arena_assets.dart';
+import '../theme/arena_theme.dart';
 
-/// EJERCICIO 1 · Splash: DISEÑO + NAVEGACIÓN.
-/// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Splash».
+/// Ejercicio 1: marca centrada y estado de arranque en la parte inferior.
 class PantallaSplash extends StatefulWidget {
   const PantallaSplash({super.key});
 
@@ -19,37 +21,94 @@ class _PantallaSplashState extends State<PantallaSplash> {
     _arrancar();
   }
 
-  /// Ya hecho: espera un momento y lee la sesión guardada (`sesion` es null si no hay).
   Future<void> _arrancar() async {
-    final espera = Future<void>.delayed(ArenaConfig.esperaSplash);
-    final sesion = await const SesionService().leer();
-    await espera;
+    final lectura = const SesionService().leer();
+    // La espera visible empieza cuando Android ya ha dibujado la pantalla.
+    await WidgetsBinding.instance.waitUntilFirstFrameRasterized;
     if (!mounted) return;
-
-    // TODO 1 (navegación): usa Navigator.pushReplacementNamed(context, ...)
-    //   - si sesion == null  → Rutas.registro
-    //   - si hay sesión      → Rutas.inicio
-    // (pushReplacement: así el botón «atrás» no vuelve al Splash).
-    // ignore: unnecessary_null_comparison
-    if (sesion == null) {
-
-    }
+    await Future<void>.delayed(ArenaConfig.esperaSplash);
+    final sesion = await lectura;
+    if (!mounted) return;
+    Navigator.pushReplacementNamed(
+      context,
+      sesion == null ? Routes.registro : Routes.inicio,
+    );
   }
 
   @override
-  Widget build(BuildContext context) {
-    // TODO 2 (diseño): construye la pantalla de arranque:
-    //   - Fondo a pantalla completa: Stack(fit: StackFit.expand) con
-    //     Image.asset(ArenaAssets.fondo, fit: BoxFit.cover).
-    //   - Centrado, en una Column (mainAxisSize: min):
-    //       emblema (ArenaAssets.emblema, alto 160)
-    //       «ARENA» con ArenaTextos.titulo en color ArenaColors.dorado
-    //       CircularProgressIndicator dorado
-    //       «Comprobando sesión…» con ArenaTextos.cuerpoSuave
-    //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
-    //   - Añade errorBuilder a las Image.asset por si falta una imagen.
-    return Scaffold(
-      body: Container()
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(
+    body: Stack(
+      fit: StackFit.expand,
+      children: [
+        Image.asset(
+          ArenaAssets.fondo,
+          fit: BoxFit.cover,
+          errorBuilder: (_, error, stackTrace) =>
+              const ColoredBox(color: ArenaColors.fondo),
+        ),
+        const ColoredBox(color: Colors.black54),
+        SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: ArenaMedidas.s24),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: const Alignment(0, -0.1),
+                  child: Column(
+                    key: const ValueKey('marca_splash'),
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        ArenaAssets.emblema,
+                        height: ArenaMedidas.emblemaSplash,
+                        errorBuilder: (_, error, stackTrace) => const Icon(
+                          Icons.shield,
+                          size: ArenaMedidas.emblemaSplash,
+                          color: ArenaColors.dorado,
+                        ),
+                      ),
+                      const SizedBox(height: ArenaMedidas.s16),
+                      Text(
+                        'ARENA',
+                        style: ArenaTextos.titulo.copyWith(
+                          color: ArenaColors.dorado,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      bottom: ArenaMedidas.s32 * 2,
+                    ),
+                    child: Column(
+                      key: const ValueKey('estado_splash'),
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const SizedBox(
+                          width: ArenaMedidas.s24,
+                          height: ArenaMedidas.s24,
+                          child: CircularProgressIndicator(
+                            color: ArenaColors.dorado,
+                            strokeWidth: ArenaMedidas.grosorBorde,
+                          ),
+                        ),
+                        const SizedBox(height: ArenaMedidas.s16),
+                        Text(
+                          'Comprobando sesión…',
+                          style: ArenaTextos.cuerpoSuave,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
