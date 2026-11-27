@@ -1,8 +1,10 @@
+import 'package:arena_game/app/routes.dart';
+import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../services/api_service.dart';
 import '../../services/sesion_service.dart';
-import '../../theme/arena_theme.dart';
+
 
 /// EJERCICIO 2 · Registro: DISEÑO + VALIDACIONES + NAVEGACIÓN.
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Registro».
@@ -10,15 +12,19 @@ class PantallaRegistroJugador extends StatefulWidget {
   const PantallaRegistroJugador({super.key});
 
   @override
-  State<PantallaRegistroJugador> createState() => _PantallaRegistroJugadorState();
+  State<PantallaRegistroJugador> createState() =>
+      _PantallaRegistroJugadorState();
 }
 
 class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
   // TODO 1: crea la GlobalKey<FormState> del formulario (ver ejercicios de formularios).
+  final _formKey = GlobalKey<FormState>();
+  final _nickCtrl = TextEditingController();
   bool _cargando = false;
-
+  bool _normasAceptadas = false;
   @override
   void dispose() {
+    _nickCtrl.dispose();
     super.dispose();
   }
 
@@ -32,6 +38,17 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
     } on ApiError catch (e) {
       return e.mensaje;
     }
+  }
+
+  String? _validarNick(String? valor) {
+    final nick = (valor ?? '').trim();
+    if (nick.isEmpty) return 'Escribe un nick';
+    if (nick.length < 3) return 'Mínimo 3 caracteres';
+    if (nick.length > 16) return 'Máximo 16 caracteres';
+    if (!RegExp(r'^[A-Za-z0-9_]+$').hasMatch(nick)) {
+      return 'Solo letras, números y _';
+    }
+    return null;
   }
 
   // TODO 3 (validación): valida el nick. Devuelve el mensaje de error o null si es válido:
@@ -50,6 +67,20 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
     //   - si error != null → muestra un SnackBar con el mensaje
     //   - si es null       → Navigator.pushReplacementNamed(context, Rutas.inicio)
     //   Comprueba `mounted` antes de usar context y deja _cargando = false al acabar.
+
+    setState(() => _cargando = true);
+    final error = await _registrarYGuardar(_nickCtrl.text.trim());
+
+    if (!mounted) return;
+    setState(() => _cargando = false);
+
+    if (error != null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error)),
+      );
+    } else {
+      Navigator.pushReplacementNamed(context, Routes.inicio);
+    }
   }
 
   @override
@@ -71,9 +102,106 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
       body: SafeArea(
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(ArenaMedidas.s24),
-          child: Column(
-            children: [
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Text(
+                  'Únete a la Arena',
+                  style: ArenaTextos.titulo,
+                ),
+
+                const SizedBox(height: ArenaMedidas.s16),
+
+                Text(
+                  'Elige un nick: así te verán en el ranking.',
+                  style: ArenaTextos.cuerpoSuave,
+                ),
+
+                const SizedBox(height: ArenaMedidas.s24),
+                // Campo Nick
+                TextFormField(
+                  controller: _nickCtrl,
+                  decoration: InputDecoration(
+                    labelText: 'Nick',
+                    helperText: '3 a 16 caracteres: letras, números y _',
+                    prefixIcon: const Icon(Icons.person),
+                    filled: true,
+                    fillColor: ArenaColors.superficie,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+                    ),
+                  ),
+                  validator: _validarNick,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  onFieldSubmitted: (_) {
+                    if (!_cargando) _entrar();
+                  },
+                ),
+                const SizedBox(height: 8),
+
+                // Casilla de normas (obligatoria) con el error en rojo
+                FormField<bool>(
+                  initialValue: false,
+                  validator: (valor) {
+                    if (valor != true) {
+                      return 'Debes aceptar las normas';
+                    }
+                    return null;
+                  },
+                  builder: (estado) {
+                    return Column(
+                      children: [
+                        CheckboxListTile(
+                          value: estado.value ?? false,
+                          title: const Text('Acepto las normas de la Arena'),
+                          controlAffinity: ListTileControlAffinity.leading,
+                          onChanged: (valor) {
+                            estado.didChange(valor);
+                            setState(() {
+                              _normasAceptadas = valor ?? false;
+                            });
+                          },
+                        ),
+                        if (estado.hasError)
+                          Text(
+                            estado.errorText!,
+                            style: const TextStyle(color: ArenaColors.negativo),
+                          ),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(height: 16),
+
+                // Botón de ancho completo
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: _cargando ? null : _entrar,
+                    child: _cargando
+                        ? const SizedBox(
+                      width: 22,
+                      height: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: ArenaColors.dorado,
+                      ),
+                    )
+                        : const Text('Entrar a la Arena'),
+                  ),
+                ),
+
+                // Enlace a ajustes
+                TextButton.icon(
+                  onPressed: () {
+                    Navigator.pushNamed(context, Routes.ajustes);
+                  },
+                  icon: const Icon(Icons.settings),
+                  label: const Text('Ajustes del servidor'),
+                ),
+              ],
+            ),
           ),
         ),
       ),

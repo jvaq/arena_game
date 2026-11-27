@@ -1,3 +1,5 @@
+import 'package:arena_game/theme/arena_assets.dart';
+import 'package:arena_game/theme/arena_theme.dart';
 import 'package:flutter/material.dart';
 
 import '../../config/arena_config.dart';
@@ -49,7 +51,52 @@ class _PantallaSplashState extends State<PantallaSplash> {
     //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
     //   - Añade errorBuilder a las Image.asset por si falta una imagen.
     return Scaffold(
-      body: Container()
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          // 1. Fondo a pantalla completa
+          Image.asset(
+            ArenaAssets.fondo,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => const SizedBox(),
+          ),
+
+          // 2. Contenido centrado por encima del fondo
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                // Emblema
+                Image.asset(
+                  ArenaAssets.emblema,
+                  height: 160,
+                  errorBuilder: (context, error, stackTrace) => const SizedBox(),
+                ),
+                const SizedBox(height: ArenaMedidas.s16),
+
+                // Título «ARENA» en color dorado
+                Text(
+                  'ARENA',
+                  style: ArenaTextos.titulo.copyWith(color: ArenaColors.dorado),
+                ),
+                const SizedBox(height: ArenaMedidas.s32),
+
+                // CircularProgressIndicator dorado
+                const CircularProgressIndicator(
+                  color: ArenaColors.dorado,
+                ),
+                const SizedBox(height: ArenaMedidas.s16),
+
+                // Texto de comprobación
+                Text(
+                  'Comprobando sesión…',
+                  style: ArenaTextos.cuerpoSuave,
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
