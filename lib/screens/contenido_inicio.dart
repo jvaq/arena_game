@@ -22,7 +22,7 @@ class _TarjetaJugador extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bool configurado = jugador.configurado;
+    final bool configurado = jugador.configurado; //
     final Color colorBorde =
     configurado ? ArenaColors.deClase(clase) : ArenaColors.borde;
 
