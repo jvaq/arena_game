@@ -112,7 +112,6 @@ class _TarjetaJugador extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Avatar o Icono por defecto
           Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -133,8 +132,6 @@ class _TarjetaJugador extends StatelessWidget {
             ),
           ),
           const SizedBox(width: ArenaMedidas.s16),
-
-          // Información del jugador
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -155,7 +152,7 @@ class _TarjetaJugador extends StatelessWidget {
             ),
           ),
 
-          // Puntos
+          //puntos
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -188,20 +185,20 @@ class _Escena extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            // Fondo
+            //fondo
             Image.asset(
               ArenaAssets.fondo,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) =>
                   Container(color: Colors.blueGrey),
             ),
-            // Plataforma
+            //plataforma
             Image.asset(
               ArenaAssets.plataforma,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) => const SizedBox(),
             ),
-            // Personaje o Interrogación
+            //personaje/interrogación
             if (jugador.configurado && clase != null)
               Align(
                 alignment: Alignment.bottomCenter,

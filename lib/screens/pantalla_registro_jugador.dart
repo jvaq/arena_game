@@ -118,7 +118,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                 ),
                 const SizedBox(height: ArenaMedidas.s16),
 
-                // Casilla de verificación de normas obligatoria usando FormField
+                //casilla verificación de normas obligatoria
                 FormField<bool>(
                   initialValue: _aceptaNormas,
                   validator: (value) {
@@ -160,7 +160,6 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                 ),
                 const SizedBox(height: ArenaMedidas.s24),
 
-                // Botón principal de Entrar
                 ElevatedButton(
                   onPressed: _cargando ? null : _entrar,
                   child: _cargando
@@ -173,7 +172,6 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                 ),
                 const SizedBox(height: ArenaMedidas.s16),
 
-                // Botón de ajustes del servidor
                 TextButton.icon(
                   onPressed: () {
                     Navigator.pushNamed(context, Routes.ajustes);
