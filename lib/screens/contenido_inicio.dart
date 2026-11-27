@@ -4,20 +4,244 @@ import '../../models/models.dart';
 import '../../theme/arena_assets.dart';
 import '../../theme/arena_theme.dart';
 import '../../utils/clase_visual.dart';
+import '../app/routes.dart';
 
 /// EJERCICIO 3 · Contenido del Inicio: DISEÑO + NAVEGACIÓN.
 ///
 /// Los datos ya llegan cargados en [jugador] (lo hace `pantalla_inicio.dart`).
 /// Diseño de referencia: Diseno_completo_Arena.pdf, pantalla «Inicio».
-///
-/// Pistas útiles:
-///   claseVisual(jugador.clase)  → 'caballero' | 'orco' | 'mago'
-///   nombreClase(jugador.clase)  → 'Mago'
-///   ArenaColors.deClase(clase)  → color del borde del avatar
-///   ArenaAssets.avatar(clase), ArenaAssets.personaje(clase), ArenaAssets.fondo, ArenaAssets.plataforma
-///   jugador.configurado == false → aún no tiene personaje (clase es null)
+class _TarjetaJugador extends StatelessWidget {
+  final Jugador jugador;
+  final String clase;
+
+  const _TarjetaJugador({
+    super.key,
+    required this.jugador,
+    required this.clase,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool configurado = jugador.configurado;
+    final Color colorBorde =
+    configurado ? ArenaColors.deClase(clase) : ArenaColors.borde;
+
+    return Container(
+      padding: const EdgeInsets.all(ArenaMedidas.s16),
+      decoration: BoxDecoration(
+        color: ArenaColors.superficie,
+        borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+        border: Border.all(
+          color: ArenaColors.borde,
+          width: ArenaMedidas.grosorBorde,
+        ),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(2),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: colorBorde,
+                width: ArenaMedidas.grosorBorde,
+              ),
+            ),
+            child: CircleAvatar(
+              radius: ArenaMedidas.radioBoton,
+              backgroundColor: ArenaColors.fondo,
+              backgroundImage:
+              configurado ? AssetImage(ArenaAssets.avatar(clase)) : null,
+              child: !configurado
+                  ? const Icon(
+                Icons.person,
+                color: Colors.blueAccent,
+                size: ArenaMedidas.s32,
+              )
+                  : null,
+            ),
+          ),
+          const SizedBox(width: ArenaMedidas.s16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  jugador.nick,
+                  style: ArenaTextos.subtitulo,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  configurado
+                      ? '${nombreClase(jugador.clase)} · ${jugador.victorias} V · ${jugador.derrotas} D'
+                      : 'Sin personaje',
+                  style: ArenaTextos.cuerpoSuave,
+                ),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${jugador.puntos}',
+                style: ArenaTextos.puntos,
+              ),
+              Text(
+                'puntos',
+                style: ArenaTextos.cuerpoSuave,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _Escena extends StatelessWidget {
+  final bool configurado;
+  final String clase;
+
+  const _Escena({
+    super.key,
+    required this.configurado,
+    required this.clase,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(ArenaMedidas.radioTarjeta),
+      child: SizedBox(
+        height: 220,
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.asset(
+                ArenaAssets.fondo,
+                fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) => Container(
+                  child: const Icon(Icons.image_not_supported, size: 48),
+                ),
+              ),
+            ),
+            // Centro plataforma
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset(
+                ArenaAssets.plataforma,
+                width: 240,
+                errorBuilder: (context, error, stackTrace) =>
+                const SizedBox.shrink(),
+              ),
+            ),
+            if (!configurado)
+              const Center(
+                child: Icon(
+                  Icons.help_outline,
+                  size: 80,
+                ),
+              )
+            else ...[
+              // Centro personaje
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Image.asset(
+                    ArenaAssets.personaje(clase),
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.help_outline,
+                      size: 80,
+                    ),
+                  ),
+                ),
+              ),
+              // Arma izquierda
+              Align(
+                alignment: Alignment.bottomLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Image.asset(
+                    width: 80,
+                    ArenaAssets.arma(clase, 'baston_fuego'),
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.help_outline,
+                      size: 80,
+                    ),
+                  ),
+                ),
+              ),
+              // Arma derecha
+              Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child: Image.asset(
+                    width: 80,
+                    ArenaAssets.arma(clase, 'libro'),
+                    errorBuilder: (context, error, stackTrace) => const Icon(
+                      Icons.help_outline,
+                      size: 80,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _Opcion extends StatelessWidget {
+  final String icono;
+  final String label;
+  final VoidCallback action;
+  final bool desactivado;
+  final bool resaltado;
+
+  const _Opcion({
+    super.key,
+    required this.icono,
+    required this.label,
+    required this.action,
+    this.desactivado = false,
+    this.resaltado = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return OutlinedButton(
+      style: OutlinedButton.styleFrom(
+        backgroundColor:
+        desactivado ? ArenaColors.fondo : ArenaColors.superficie,
+        side: BorderSide(
+          color: resaltado ? ArenaColors.dorado : ArenaColors.borde,
+        ),
+        padding: EdgeInsets.zero,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      ),
+      onPressed: desactivado ? null : action,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Image.asset(icono, width: 60, height: 60),
+          Text(label, style: ArenaTextos.cuerpo),
+        ],
+      ),
+    );
+  }
+}
+
 class ContenidoInicio extends StatelessWidget {
-  const ContenidoInicio({super.key, required this.jugador, required this.alVolver});
+  const ContenidoInicio({
+    super.key,
+    required this.jugador,
+    required this.alVolver,
+  });
 
   final Jugador jugador;
 
@@ -25,45 +249,71 @@ class ContenidoInicio extends StatelessWidget {
   final VoidCallback alVolver;
 
   // TODO 6 (navegación): método que abre una ruta y, al volver, llama a alVolver():
-  //   Future<void> _ir(BuildContext context, String ruta) async {
-  //     await Navigator.pushNamed(context, ruta);
-  //     alVolver();
-  //   }
+  Future<void> _ir(BuildContext context, String ruta) async {
+    await Navigator.pushNamed(context, ruta);
+    alVolver();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // ignore: unused_local_variable
     final clase = claseVisual(jugador.clase);
+    final configurado = jugador.configurado;
 
-    // TODO 1: sustituye este ListView por el diseño completo. Un ListView con padding
-    //         ArenaMedidas.s16 y, en orden: tarjeta, escena, aviso y menú.
+    // TODO 1: ListView con padding ArenaMedidas.s16 y, en orden:
+    // tarjeta, escena, aviso y menú.
     return ListView(
       padding: const EdgeInsets.all(ArenaMedidas.s16),
       children: [
-        // TODO 2: TARJETA DEL JUGADOR (crea un widget propio, p. ej. _TarjetaJugador)
-        //   Container con color superficie, borde y esquinas redondeadas (ArenaMedidas.radioTarjeta).
-        //   Row: avatar circular con borde del color de la clase · nick (subtitulo) y
-        //   «Mago · 21V · 3D» · a la derecha los puntos (ArenaTextos.puntos) y «puntos».
-        //   Sin personaje: icono de persona y el texto «Sin personaje».
-        Text('Tarjeta del jugador: ${jugador.nick}', style: ArenaTextos.cuerpo),
-
-        // TODO 3: ESCENA (widget propio, p. ej. _Escena)
-        //   ClipRRect + SizedBox(height: 220) + Stack: fondo (BoxFit.cover), plataforma y
-        //   personaje colocados con Align. Sin personaje: un icono de interrogación.
-        //   Usa errorBuilder en Image.asset por si falta alguna imagen.
+        _TarjetaJugador(
+          jugador: jugador,
+          clase: clase,
+        ),
         const SizedBox(height: ArenaMedidas.s16),
-        Image.asset(ArenaAssets.emblema, height: 96),
-
-        // TODO 4: si !jugador.configurado, un texto centrado:
-        //   «Aún no tienes personaje. Créalo para poder combatir.»
-
-        // TODO 5: MENÚ 2×2 (GridView.count con shrinkWrap y NeverScrollableScrollPhysics,
-        //   o Row/Column). Cuatro botones iguales (icono + texto), widget propio _Opcion:
-        //     Combatir      → Rutas.rival      (desactivado si !configurado)
-        //     Mi personaje  → Rutas.personaje  (resaltado en dorado si !configurado)
-        //     Ranking       → Rutas.ranking
-        //     Historial     → Rutas.historial
-        //   Cada botón navega con el método del TODO 6.
+        _Escena(
+          configurado: configurado,
+          clase: clase,
+        ),
+        const SizedBox(height: ArenaMedidas.s16),
+        if (!configurado) ...[
+          Text(
+            'Aún no tienes personaje. Créalo para poder combatir.',
+            style: ArenaTextos.cuerpo,
+            textAlign: TextAlign.center,
+          ),
+          const SizedBox(height: ArenaMedidas.s16),
+        ],
+        GridView.count(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          crossAxisCount: 2,
+          childAspectRatio: 2,
+          children: [
+            _Opcion(
+              icono: ArenaAssets.icono_rival,
+              desactivado: !configurado,
+              label: 'Combatir',
+              action: () => _ir(context, Routes.rival),
+            ),
+            _Opcion(
+              icono: ArenaAssets.icono_personaje,
+              resaltado: !configurado,
+              label: 'Personaje',
+              action: () => _ir(context, Routes.personaje),
+            ),
+            _Opcion(
+              icono: ArenaAssets.icono_ranking,
+              label: 'Ranking',
+              action: () => _ir(context, Routes.ranking),
+            ),
+            _Opcion(
+              icono: ArenaAssets.icono_historial,
+              label: 'Historial',
+              action: () => _ir(context, Routes.historial),
+            ),
+          ],
+        ),
       ],
     );
   }
