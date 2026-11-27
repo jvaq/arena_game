@@ -61,6 +61,13 @@ class ArenaMedidas {
   static const double radioBoton = 26;
   static const double grosorBorde = 1.5;
   static const double grosorBordeSeleccion = 2.5;
+
+  // Medidas de las pantallas de arranque del PDF.
+  static const double emblemaSplash = 160;
+  static const double emblemaFormulario = 96;
+  static const double escenaInicio = 220;
+  static const double personajeInicio = 180;
+  static const double proporcionMenuInicio = 1.8;
 }
 
 /// Estilos de texto. Títulos con Cinzel, resto con Nunito.
@@ -69,21 +76,40 @@ class ArenaTextos {
   ArenaTextos._();
 
   static TextStyle titulo = GoogleFonts.cinzel(
-      fontSize: 32, fontWeight: FontWeight.w700, color: ArenaColors.texto);
+    fontSize: 32,
+    fontWeight: FontWeight.w700,
+    color: ArenaColors.texto,
+  );
   static TextStyle subtitulo = GoogleFonts.cinzel(
-      fontSize: 22, fontWeight: FontWeight.w700, color: ArenaColors.texto);
+    fontSize: 22,
+    fontWeight: FontWeight.w700,
+    color: ArenaColors.texto,
+  );
   static TextStyle puntos = GoogleFonts.cinzel(
-      fontSize: 18, fontWeight: FontWeight.w700, color: ArenaColors.dorado);
+    fontSize: 18,
+    fontWeight: FontWeight.w700,
+    color: ArenaColors.dorado,
+  );
   static TextStyle cuerpo = GoogleFonts.nunito(
-      fontSize: 16, fontWeight: FontWeight.w600, color: ArenaColors.texto);
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+    color: ArenaColors.texto,
+  );
   static TextStyle cuerpoSuave = GoogleFonts.nunito(
-      fontSize: 14, fontWeight: FontWeight.w500, color: ArenaColors.textoSuave);
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: ArenaColors.textoSuave,
+  );
   static TextStyle etiqueta = GoogleFonts.nunito(
-      fontSize: 12, fontWeight: FontWeight.w700, color: ArenaColors.textoSuave);
+    fontSize: 12,
+    fontWeight: FontWeight.w700,
+    color: ArenaColors.textoSuave,
+  );
   static TextStyle boton = GoogleFonts.nunito(
-      fontSize: 16,
-      fontWeight: FontWeight.w800,
-      color: ArenaColors.textoSobreDorado);
+    fontSize: 16,
+    fontWeight: FontWeight.w800,
+    color: ArenaColors.textoSobreDorado,
+  );
 }
 
 /// Tema global. En main.dart: MaterialApp(theme: ArenaTheme.oscuro(), ...)
