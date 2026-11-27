@@ -197,7 +197,7 @@ class _PantallaRegistroJugadorState extends State<PantallaRegistroJugador> {
                       disabledBackgroundColor: Colors.amber.shade700.withValues(alpha: 0.65),
                       elevation: 4,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(50),
                         side: BorderSide(
                           color: Colors.amber.shade200,
                           width: 1.5,
