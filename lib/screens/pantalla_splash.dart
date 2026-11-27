@@ -38,18 +38,52 @@ class _PantallaSplashState extends State<PantallaSplash> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO 2 (diseño): construye la pantalla de arranque:
-    //   - Fondo a pantalla completa: Stack(fit: StackFit.expand) con
-    //     Image.asset(ArenaAssets.fondo, fit: BoxFit.cover).
-    //   - Centrado, en una Column (mainAxisSize: min):
-    //       emblema (ArenaAssets.emblema, alto 160)
-    //       «ARENA» con ArenaTextos.titulo en color ArenaColors.dorado
-    //       CircularProgressIndicator dorado
-    //       «Comprobando sesión…» con ArenaTextos.cuerpoSuave
-    //   - Separa los elementos con SizedBox(height: ArenaMedidas.s16 / s32).
-    //   - Añade errorBuilder a las Image.asset por si falta una imagen.
     return Scaffold(
-      body: Container()
+      body: Stack(
+        fit: StackFit.expand,
+        children: [
+          Image.asset(
+            'assets/images/ui/fondo_arena.png',
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return const ColoredBox(color: Color(0xFF140F26));
+            },
+          ),
+          ColoredBox(color: Colors.black.withValues(alpha: 0.55)),
+          Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Image.asset(
+                  'assets/images/ui/emblema.png',
+                  height: 160,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.shield, size: 120);
+                  },
+                ),
+                const SizedBox(height: 16),
+                const Text(
+                  'ARENA',
+                  style: TextStyle(
+                    fontSize: 32,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFFE5A93C),
+                  ),
+                ),
+                const SizedBox(height: 32),
+                const CircularProgressIndicator(
+                  color: Color(0xFFE5A93C),
+                ),
+                const SizedBox(height: 16),
+                const Text('Comprobando sesión...'),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
+
+
