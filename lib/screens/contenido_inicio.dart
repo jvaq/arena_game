@@ -67,7 +67,7 @@ class _TarjetaJugador extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  jugador.nick,
+                  configurado ? jugador.nick : "nuevo01",
                   style: ArenaTextos.subtitulo,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -84,7 +84,7 @@ class _TarjetaJugador extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                '${jugador.puntos}',
+                configurado ? '${jugador.puntos}': '0',
                 style: ArenaTextos.puntos,
               ),
               Text(
